@@ -1,35 +1,30 @@
 package com.example.mybinder
 
-
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.LinearLayout
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mybinder.Adapters.MonstruoAdapter
 import com.example.mybinder.Adapters.SpellTrapAdapter
-
+import com.example.mybinder.Model.Monstruo
+import com.example.mybinder.Model.Spells_Traps
 import com.example.mybinder.controllers.DatabaseHelper
 import com.example.mybinder.controllers.OnItemClickListener
 import com.google.android.material.navigation.NavigationView
 
+class Filtrado_list : AppCompatActivity(){
 
-class MainActivity : AppCompatActivity() {
-
-
+    lateinit var monstruosList: List<Monstruo>
+    lateinit var spellsTrapsList: List<Spells_Traps>
     lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.filtrado_list)
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
         val navView = findViewById<NavigationView>(R.id.nav_view)
@@ -37,21 +32,41 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        val nombre = intent.getStringExtra("nombre")
+        val categoria = intent.getStringExtra("categoria")
+        val tipo = intent.getStringExtra("tipo")
+        val codigo = intent.getStringExtra("codigo")
+        val categoria2 = intent.getStringExtra("categoria2")
+        val nivel = intent.getIntExtra("nivel", 0)
+        val nivel2 = intent.getIntExtra("nivel2", 13)
+        val ataque = intent.getIntExtra("ataque", 0)
+        val ataque2 = intent.getIntExtra("ataque2", 9000)
+        val defensa = intent.getIntExtra("defensa", 0)
+        val defensa2 = intent.getIntExtra("defensa2", 9000)
+        val atributo = intent.getStringExtra("atributo")
+        val escala = intent.getIntExtra("escala", 0)
+        val escala2 = intent.getIntExtra("escala2", 13)
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-
-        val databaseHelper = DatabaseHelper(this@MainActivity)
-
-        val filtrado_btn = findViewById<ImageButton>(R.id.filtrado_Main)
+        val databaseHelper = DatabaseHelper(this@Filtrado_list)
 
         // Crear un RecyclerView para la lista de monstruos
 
         val monstruosRecyclerView = RecyclerView(this)
         val monstruosLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         monstruosRecyclerView.layoutManager = monstruosLayoutManager
-        val monstruosList = databaseHelper.getAllMonstruos()
+
+        if(categoria == "Monstruo" || categoria == "") {
+             monstruosList = databaseHelper.buscarMonstruos(nombre, categoria, tipo, codigo, categoria2,
+                nivel, nivel2, atributo, escala, escala2, ataque, ataque2, defensa, defensa2)
+        }
+        else{
+             monstruosList = listOf<Monstruo>()
+        }
+
         val monstruosAdapter =
-            if (monstruosList != null) MonstruoAdapter(monstruosList,object : OnItemClickListener{
+            if (monstruosList != null) MonstruoAdapter(monstruosList,object : OnItemClickListener {
                 override fun onItemClick(position: Int) {
                     val intent = Intent(applicationContext, DetallesCartaMon::class.java)
 
@@ -68,14 +83,13 @@ class MainActivity : AppCompatActivity() {
                     intent.putExtra("escala", monstruosList[position].escala)
                     intent.putExtra("cantidad", monstruosList[position].cantidad)
                     intent.putExtra("imagen", monstruosList[position].imagen)
-                    intent.putExtra("cambio", monstruosList[position].cambio)
 
 
                     startActivity(intent)
                 }
 
 
-            }) else MonstruoAdapter(emptyList(), object : OnItemClickListener{
+            }) else MonstruoAdapter(emptyList(), object : OnItemClickListener {
                 override fun onItemClick(position: Int) {
                 }
 
@@ -89,7 +103,12 @@ class MainActivity : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         spellsTrapsRecyclerView.layoutManager = spellsTrapsLayoutManager
 
-        val spellsTrapsList = databaseHelper.getAllSpellTraps()
+        if(categoria =="" || categoria =="Magica" || categoria =="Trampa") {
+           spellsTrapsList = databaseHelper.buscarSpellTraps(nombre, categoria, tipo, codigo)
+        }
+        else{
+            spellsTrapsList= listOf<Spells_Traps>()
+        }
         val spellsTrapsAdapter = SpellTrapAdapter(spellsTrapsList, object : OnItemClickListener {
             override fun onItemClick(position: Int) {
 
@@ -102,7 +121,6 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("categoria", spellsTrapsList[position].categoria)
                 intent.putExtra("cantidad", spellsTrapsList[position].cantidad)
                 intent.putExtra("nombre", spellsTrapsList[position].nombre)
-                intent.putExtra("cambio",  spellsTrapsList[position].cambio)
 
                 startActivity(intent)
             }
@@ -153,19 +171,14 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        filtrado_btn.setOnClickListener{
-            val intent = Intent(this, Filtrado_activity::class.java)
-            startActivity(intent)
-        }
-
     }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-       if(toggle.onOptionsItemSelected(item)){
-           return true
-       }
+        if(toggle.onOptionsItemSelected(item)){
+            return true
+        }
         return super.onOptionsItemSelected(item)
     }
 

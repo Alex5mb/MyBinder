@@ -157,7 +157,10 @@ class AñadirCarta : AppCompatActivity() {
                 id: Long
             ) {
                 when (position) {
-                    0 -> {
+                    0 ->{
+                        categoria ="Monstruo"
+                    }
+                    1 -> {
                         categoria = "Monstruo"
 
                         spinnerCategorias2.visibility = View.VISIBLE
@@ -194,7 +197,7 @@ class AñadirCarta : AppCompatActivity() {
                             }
 
                     }
-                    1 -> {
+                    2 -> {
                         categoria = "Magica"
 
                         spinnerCategorias2.visibility = View.INVISIBLE
@@ -232,7 +235,7 @@ class AñadirCarta : AppCompatActivity() {
                             }
 
                     }
-                    2 -> {
+                    3 -> {
                         categoria = "Trampa"
 
                         spinnerCategorias2.visibility = View.INVISIBLE
@@ -318,17 +321,25 @@ class AñadirCarta : AppCompatActivity() {
 
                 val categoriaNonNull = categoria ?: "Monstruo"
                 val monstruo = Monstruo(0, categoriaNonNull, categoria2, nombre, atributo, nivel, tipo,
-                    ataque, defensa, codigo, escala, cantidad, currentPhotoPath)
+                    ataque, defensa, codigo, escala, cantidad, currentPhotoPath, false)
                 Toast.makeText(this, "Monstruo Creado!", Toast.LENGTH_SHORT).show()
 
-                val imagePath: String = currentPhotoPath
                 val databaseHelper = DatabaseHelper(this@AñadirCarta)
-                databaseHelper.insertImagePath(imagePath)
 
                 databaseHelper.insertMonstruo(monstruo)
+                val tamaño = databaseHelper.getAllMonstruos().size - 1
+
+                val id = databaseHelper.getAllMonstruos()[tamaño].id
+                println(id)
+                println(databaseHelper.getAllMonstruos())
+                databaseHelper.updateMonstruo(
+                    Monstruo(id, categoriaNonNull, categoria2, nombre, atributo, nivel, tipo,
+                        ataque, defensa, codigo, escala, cantidad, currentPhotoPath, false)
+                )
+
             }
             else{
-                val spell_trap = Spells_Traps(0, nombre,categoria,tipo,codigo,cantidad,currentPhotoPath)
+                val spell_trap = Spells_Traps(0, nombre,categoria,tipo,codigo,cantidad,currentPhotoPath, false)
 
                 if(categoria == "Magica"){
                     Toast.makeText(this, "Magica Creada!", Toast.LENGTH_SHORT).show()
@@ -337,9 +348,7 @@ class AñadirCarta : AppCompatActivity() {
                     Toast.makeText(this, "Trampa Creada!", Toast.LENGTH_SHORT).show()
                 }
 
-                val imagePath: String = currentPhotoPath
                 val databaseHelper = DatabaseHelper(this@AñadirCarta)
-                databaseHelper.insertImagePath(imagePath)
 
                 databaseHelper.insertSpellTrap(spell_trap)
             }

@@ -1,35 +1,38 @@
 package com.example.mybinder
 
-
+import android.os.Environment
+import android.util.Log
+import com.itextpdf.text.Document
+import com.itextpdf.text.Element
+import com.itextpdf.text.Font
+import com.itextpdf.text.Paragraph
+import com.itextpdf.text.pdf.PdfWriter
+import java.io.File
+import java.io.FileOutputStream
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mybinder.Adapters.MonstruoAdapter
 import com.example.mybinder.Adapters.SpellTrapAdapter
-
 import com.example.mybinder.controllers.DatabaseHelper
 import com.example.mybinder.controllers.OnItemClickListener
 import com.google.android.material.navigation.NavigationView
 
 
-class MainActivity : AppCompatActivity() {
+class Lista_cambio: AppCompatActivity() {
 
 
     lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.lista_cambio_layout)
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
         val navView = findViewById<NavigationView>(R.id.nav_view)
@@ -40,18 +43,19 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
-        val databaseHelper = DatabaseHelper(this@MainActivity)
+        val databaseHelper = DatabaseHelper(this@Lista_cambio)
 
         val filtrado_btn = findViewById<ImageButton>(R.id.filtrado_Main)
+        val pdf_btn = findViewById<ImageButton>(R.id.pdf_btn)
 
         // Crear un RecyclerView para la lista de monstruos
 
         val monstruosRecyclerView = RecyclerView(this)
         val monstruosLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         monstruosRecyclerView.layoutManager = monstruosLayoutManager
-        val monstruosList = databaseHelper.getAllMonstruos()
+        val monstruosList = databaseHelper.getMonstruosConCambio()
         val monstruosAdapter =
-            if (monstruosList != null) MonstruoAdapter(monstruosList,object : OnItemClickListener{
+            if (monstruosList != null) MonstruoAdapter(monstruosList,object : OnItemClickListener {
                 override fun onItemClick(position: Int) {
                     val intent = Intent(applicationContext, DetallesCartaMon::class.java)
 
@@ -75,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
 
-            }) else MonstruoAdapter(emptyList(), object : OnItemClickListener{
+            }) else MonstruoAdapter(emptyList(), object : OnItemClickListener {
                 override fun onItemClick(position: Int) {
                 }
 
@@ -89,7 +93,7 @@ class MainActivity : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         spellsTrapsRecyclerView.layoutManager = spellsTrapsLayoutManager
 
-        val spellsTrapsList = databaseHelper.getAllSpellTraps()
+        val spellsTrapsList = databaseHelper.getSpellTrapsWithChanges()
         val spellsTrapsAdapter = SpellTrapAdapter(spellsTrapsList, object : OnItemClickListener {
             override fun onItemClick(position: Int) {
 
@@ -142,6 +146,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.cambio -> {
+
                     val intent = Intent(this, Lista_cambio::class.java)
                     startActivity(intent)
                 }
@@ -158,15 +163,50 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-    }
+        pdf_btn.setOnClickListener{
 
+           val listacompleta = mutableListOf<Any>( monstruosList + spellsTrapsList )
+
+            createPdf(listacompleta)
+        }
+
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-       if(toggle.onOptionsItemSelected(item)){
-           return true
-       }
+        if(toggle.onOptionsItemSelected(item)){
+            return true
+        }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun createPdf(objects: List<Any>) {
+        val document = Document()
+        val fileName = "mi cambio.pdf"
+        val filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString() + "/" + fileName
+
+        val file = File(filePath)
+        file.createNewFile()
+        val outputStream = FileOutputStream(file, false)
+
+        PdfWriter.getInstance(document, outputStream)
+        document.open()
+
+        val titleFont = Font(Font.FontFamily.TIMES_ROMAN, 18f, Font.BOLD)
+        val bodyFont = Font(Font.FontFamily.TIMES_ROMAN, 12f)
+
+        document.add(Paragraph("Cambio:", titleFont))
+
+        for (obj in objects) {
+            val objString = obj.toString()
+            val paragraph = Paragraph(objString, bodyFont)
+            paragraph.alignment = Element.ALIGN_JUSTIFIED
+            document.add(paragraph)
+        }
+
+        document.close()
+        outputStream.close()
+        Log.d("PDF", "PDF created at $filePath")
     }
 
 }

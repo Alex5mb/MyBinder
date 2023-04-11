@@ -175,6 +175,14 @@
                 android:text="Ir a Editar!" />
 
             <Button
+                android:id="@+id/coleccion_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginEnd="45dp"
+                android:text="Mandar a cambio" />
+
+            <Button
                 android:id="@+id/delete_btnST"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

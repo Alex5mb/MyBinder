@@ -1,5 +1,6 @@
 package com.example.mybinder.controllers
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -9,6 +10,7 @@ import com.example.mybinder.Model.Monstruo
 import com.example.mybinder.Model.Spells_Traps
 import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.COL_ATAQUE
 import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.COL_ATRIBUTO
+import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.COL_CAMBIO
 import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.COL_CANTIDAD
 import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.COL_CATEGORIA
 import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.COL_CATEGORIA2
@@ -46,7 +48,8 @@ class DatabaseHelper(context: Context):
                 $COL_CODIGO TEXT,
                 $COL_ESCALA INTEGER,
                 $COL_CANTIDAD INTEGER,
-                $COL_IMAGEN TEXT
+                $COL_IMAGEN TEXT,
+                $COL_CAMBIO INT
             )
         """.trimIndent()
 
@@ -58,7 +61,8 @@ class DatabaseHelper(context: Context):
                 $COL_TIPO TEXT,
                 $COL_CODIGO TEXT,
                 $COL_CANTIDAD INTEGER,
-                $COL_IMAGEN TEXT
+                $COL_IMAGEN TEXT,
+                $COL_CAMBIO INT
             )
         """.trimIndent()
 
@@ -90,8 +94,9 @@ class DatabaseHelper(context: Context):
 
     fun insertMonstruo(monstruo: Monstruo) {
         val db = writableDatabase
+
         val values = ContentValues().apply {
-            put(COL_CATEGORIA, "Monstruo")
+            put(COL_CATEGORIA, monstruo.categoria)
             put(COL_CATEGORIA2, monstruo.categoria2)
             put(COL_NOMBRE, monstruo.nombre)
             put(COL_ATRIBUTO, monstruo.atributo)
@@ -103,6 +108,7 @@ class DatabaseHelper(context: Context):
             put(COL_ESCALA, monstruo.escala)
             put(COL_CANTIDAD, monstruo.cantidad)
             put(COL_IMAGEN, monstruo.imagen)
+            put(COL_CAMBIO, monstruo.cambio)
         }
         db.insert(TABLE_MONSTRUOS, null, values)
         db.close()
@@ -110,6 +116,7 @@ class DatabaseHelper(context: Context):
 
     fun insertSpellTrap(spellTrap: Spells_Traps) {
         val db = writableDatabase
+
         val values = ContentValues().apply {
             put(COL_NOMBRE, spellTrap.nombre)
             put(COL_CATEGORIA, spellTrap.categoria)
@@ -117,6 +124,7 @@ class DatabaseHelper(context: Context):
             put(COL_CODIGO, spellTrap.codigo)
             put(COL_CANTIDAD, spellTrap.cantidad)
             put(COL_IMAGEN, spellTrap.imagen)
+            put(COL_CAMBIO, spellTrap.cambio)
         }
 
         db.insert(TABLE_SPELL_TRAP, null, values)
@@ -138,13 +146,10 @@ class DatabaseHelper(context: Context):
             put(COL_ESCALA, monstruo.escala)
             put(COL_CANTIDAD, monstruo.cantidad)
             put(COL_IMAGEN, monstruo.imagen)
+            put(COL_CAMBIO, monstruo.cambio)
         }
 
-        db.update(
-            TABLE_MONSTRUOS,
-            values,
-            "$COL_ID = ?",
-            arrayOf(monstruo.id.toString())
+        db.update(TABLE_MONSTRUOS, values, "$COL_ID = ?", arrayOf(monstruo.id.toString())
         )
         db.close()
     }
@@ -158,14 +163,10 @@ class DatabaseHelper(context: Context):
             put(COL_CODIGO, spellTrap.codigo)
             put(COL_CANTIDAD, spellTrap.cantidad)
             put(COL_IMAGEN, spellTrap.imagen)
+            put(COL_CAMBIO, spellTrap.cambio)
         }
 
-        db.update(
-            TABLE_SPELL_TRAP,
-            values,
-            "$COL_ID = ?",
-            arrayOf(spellTrap.id.toString())
-        )
+        db.update(TABLE_SPELL_TRAP, values, "$COL_ID = ?", arrayOf(spellTrap.id.toString()))
         db.close()
     }
 
@@ -192,7 +193,7 @@ class DatabaseHelper(context: Context):
     fun getAllMonstruos(): List<Monstruo> {
         val monstruosList = mutableListOf<Monstruo>()
         val db = readableDatabase
-        val query = "SELECT * FROM $TABLE_MONSTRUOS WHERE categoria = 'Monstruo'"
+        val query = "SELECT * FROM $TABLE_MONSTRUOS "
         val cursor = db.rawQuery(query, null)
         if (cursor.moveToFirst()) {
             do {
@@ -209,9 +210,10 @@ class DatabaseHelper(context: Context):
                 val escala = cursor.getInt(10)
                 val cantidad = cursor.getInt(11)
                 val imagen = cursor.getString(12)
+                val cambio = cursor.getInt(13) == 1
 
                 val monstruo = Monstruo(id, categoria, categoria2, nombre, atributo, nivel, tipo,
-                    ataque, defensa, codigo, escala, cantidad, imagen)
+                    ataque, defensa, codigo, escala, cantidad, imagen, cambio)
 
                 monstruosList.add(monstruo)
             } while (cursor.moveToNext())
@@ -236,8 +238,9 @@ class DatabaseHelper(context: Context):
                     val codigo = cursor.getString(4)
                     val cantidad = cursor.getInt(5)
                     val imagen = cursor.getString(6)
+                    val cambio = cursor.getInt(7) == 1
 
-                    list.add(Spells_Traps(id, nombre, categoria, tipo, codigo, cantidad, imagen))
+                    list.add(Spells_Traps(id, nombre, categoria, tipo, codigo, cantidad, imagen, cambio))
                 } while (cursor.moveToNext())
             }
             cursor.close()
@@ -245,6 +248,185 @@ class DatabaseHelper(context: Context):
         db.close()
         return list
     }
+
+    @SuppressLint("Range")
+    fun buscarMonstruos(nombre: String?, categoria: String?, tipo: String?, codigo: String?,
+                        categoria2: String?, minNivel: Int?, maxNivel: Int?, atributo: String?,
+                        minEscala: Int?, maxEscala: Int?, minAtaque: Int?, maxAtaque: Int?,
+                        minDefensa: Int?, maxDefensa: Int?): List<Monstruo> {
+
+        val db =readableDatabase
+
+        val query = "SELECT * FROM $TABLE_MONSTRUOS " +
+                "WHERE ${if(nombre != "" ) "nombre LIKE '%$nombre%' AND " else ""}" +
+                "${if(categoria !="") "categoria LIKE '%$categoria%' AND " else ""}" +
+                "${if(tipo !="") "tipo LIKE '%$tipo%'AND " else ""}"+
+                "${if(codigo != "") "codigo LIKE '%$codigo%' AND " else ""}"+
+                "${if(categoria2 != "") "categoria2  LIKE '%$categoria2%' AND " else ""}"+
+                "nivel BETWEEN ${minNivel ?: 0} AND ${maxNivel ?: 12} " +
+                "AND ${if(atributo != "") "atributo LIKE '$atributo' AND " else ""}"+
+                "escala BETWEEN ${minEscala ?: 0} AND ${maxEscala ?: 13} " +
+                "AND ataque BETWEEN ${minAtaque ?: 0} AND ${maxAtaque ?: 9999} " +
+                "AND defensa BETWEEN ${minDefensa ?: 0} AND ${maxDefensa ?: 9999}"
+
+                    val cursor = db.rawQuery(query, null)
+        val monstruos = mutableListOf<Monstruo>()
+        while (cursor.moveToNext()) {
+            val id = cursor.getInt(0)
+            val categoria = cursor.getString(1) ?: "Monstruo"
+            val categoria2 = cursor.getString(2) ?: ""
+            val nombre = cursor.getString(3) ?: ""
+            val atributo = cursor.getString(4)
+            val nivel = cursor.getInt(5)
+            val tipo = cursor.getString(6)
+            val ataque = cursor.getInt(7)
+            val defensa = cursor.getInt(8)
+            val codigo = cursor.getString(9)
+            val escala = cursor.getInt(10)
+            val cantidad = cursor.getInt(11)
+            val imagen = cursor.getString(12)
+            val cambio = cursor.getInt(13) == 1
+
+            val monstruo = Monstruo(id, categoria, categoria2, nombre, atributo, nivel, tipo,
+                ataque, defensa, codigo, escala, cantidad, imagen, cambio)
+            monstruos.add(monstruo)
+        }
+        cursor.close()
+        db.close()
+
+        return monstruos
+    }
+
+    @SuppressLint("Range")
+    fun buscarSpellTraps(nombre: String?, categoria: String?, tipo: String?, codigo: String?): List<Spells_Traps> {
+
+        val spellTraps = mutableListOf<Spells_Traps>()
+
+        val db = this.readableDatabase
+
+        val selectQuery = "SELECT * FROM $TABLE_SPELL_TRAP " +
+                "WHERE ${if(nombre != "" ) "nombre LIKE '%$nombre%' AND " else ""}" +
+                "categoria LIKE '%$categoria%'" +
+                "AND tipo LIKE '%$tipo%'"+
+                "${if(codigo != "") " AND codigo LIKE '%$codigo%'" else ""}"
+
+        val cursor = db.rawQuery(selectQuery, null)
+
+        while (cursor.moveToNext()) {
+            val id = cursor.getInt(0)
+            val nombre = cursor.getString(1)
+            val categoria = cursor.getString(2)
+            val tipo = cursor.getString(3)
+            val codigo = cursor.getString(4)
+            val cantidad = cursor.getInt(5)
+            val imagen = cursor.getString(6)
+            val cambio = cursor.getInt(7) == 1
+
+            val spellTrap = Spells_Traps(id, nombre, categoria, tipo, codigo, cantidad, imagen, cambio)
+            spellTraps.add(spellTrap)
+        }
+
+        cursor.close()
+        db.close()
+
+        return spellTraps
+    }
+
+    @SuppressLint("Range")
+    fun buscarMonstruosPorCategoria(categoria: String): List<Monstruo> {
+        val db = readableDatabase
+        val query = "SELECT * FROM $TABLE_MONSTRUOS WHERE categoria = ?"
+        val cursor = db.rawQuery(query, arrayOf(categoria))
+
+        val monstruos = mutableListOf<Monstruo>()
+
+        while (cursor.moveToNext()) {
+            val id = cursor.getInt(cursor.getColumnIndex(COL_ID))
+            val nombre = cursor.getString(cursor.getColumnIndex(COL_NOMBRE))
+            val categoria = cursor.getString(cursor.getColumnIndex(COL_CATEGORIA))
+            val categoria2 = cursor.getString(cursor.getColumnIndex(COL_CATEGORIA2))
+            val atributo = cursor.getString(cursor.getColumnIndex(COL_ATRIBUTO))
+            val nivel = cursor.getInt(cursor.getColumnIndex(COL_NIVEL))
+            val tipo = cursor.getString(cursor.getColumnIndex(COL_TIPO))
+            val ataque = cursor.getInt(cursor.getColumnIndex(COL_ATAQUE))
+            val defensa = cursor.getInt(cursor.getColumnIndex(COL_DEFENSA))
+            val codigo = cursor.getString(cursor.getColumnIndex(COL_CODIGO))
+            val escala = cursor.getInt(cursor.getColumnIndex(COL_ESCALA))
+            val cantidad = cursor.getInt(cursor.getColumnIndex(COL_CANTIDAD))
+            val imagen = cursor.getString(cursor.getColumnIndex(COL_IMAGEN))
+            val cambio = cursor.getInt(cursor.getColumnIndex(COL_CAMBIO)) == 1
+
+            val monstruo = Monstruo(id, nombre, categoria, categoria2, atributo, nivel, tipo, ataque, defensa, codigo, escala, cantidad, imagen, cambio)
+            monstruos.add(monstruo)
+        }
+
+        cursor.close()
+        db.close()
+
+        return monstruos
+    }
+
+    @SuppressLint("Range")
+    fun getMonstruosConCambio(): List<Monstruo> {
+        val monstruos = mutableListOf<Monstruo>()
+        val query = "SELECT * FROM $TABLE_MONSTRUOS WHERE $COL_CAMBIO = 1"
+        val db = readableDatabase
+        val cursor = db.rawQuery(query, null)
+        with(cursor) {
+            while (moveToNext()) {
+                val id = getInt(getColumnIndex(COL_ID))
+                val categoria = getString(getColumnIndex(COL_CATEGORIA))
+                val categoria2 = getString(getColumnIndex(COL_CATEGORIA2))
+                val nombre = getString(getColumnIndex(COL_NOMBRE))
+                val atributo = getString(getColumnIndex(COL_ATRIBUTO))
+                val nivel = getInt(getColumnIndex(COL_NIVEL))
+                val tipo = getString(getColumnIndex(COL_TIPO))
+                val ataque = getInt(getColumnIndex(COL_ATAQUE))
+                val defensa = getInt(getColumnIndex(COL_DEFENSA))
+                val codigo = getString(getColumnIndex(COL_CODIGO))
+                val escala = getInt(getColumnIndex(COL_ESCALA))
+                val cantidad = getInt(getColumnIndex(COL_CANTIDAD))
+                val imagen = getString(getColumnIndex(COL_IMAGEN))
+                val cambio = getInt(getColumnIndex(COL_CAMBIO)) == 1
+
+                val monstruo = Monstruo(id, categoria, categoria2, nombre, atributo, nivel, tipo, ataque, defensa, codigo, escala, cantidad, imagen, cambio)
+                monstruos.add(monstruo)
+            }
+        }
+        cursor.close()
+        db.close()
+        return monstruos
+    }
+
+    fun getSpellTrapsWithChanges(): List<Spells_Traps> {
+        val spellTraps = mutableListOf<Spells_Traps>()
+        val query = "SELECT * FROM $TABLE_SPELL_TRAP WHERE $COL_CAMBIO = 1"
+        val db = readableDatabase
+        val cursor = db.rawQuery(query, null)
+
+        while (cursor.moveToNext()) {
+            val spellTrap = Spells_Traps(
+                cursor.getInt(0),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getString(3),
+                cursor.getString(4),
+                cursor.getInt(5),
+                cursor.getString(6),
+                cursor.getInt(7) == 1
+            )
+            spellTraps.add(spellTrap)
+        }
+
+        cursor.close()
+        db.close()
+
+        return spellTraps
+    }
+
+
+
+
 
 
 }

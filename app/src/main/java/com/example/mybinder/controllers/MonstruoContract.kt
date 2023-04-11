@@ -23,6 +23,7 @@ class MonstruoContract {
                 const val COL_ESCALA = "escala"
                 const val COL_CANTIDAD = "cantidad"
                 const val COL_IMAGEN = "imagen"
+                const val COL_CAMBIO = "cambio"
             }
         }
     }

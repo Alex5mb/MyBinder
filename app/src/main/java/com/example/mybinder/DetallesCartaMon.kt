@@ -9,9 +9,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.mybinder.Model.Monstruo
+import com.example.mybinder.Model.Spells_Traps
 import com.example.mybinder.controllers.DatabaseHelper
 
 class DetallesCartaMon: AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detalles_mon_layout)
@@ -29,7 +32,7 @@ class DetallesCartaMon: AppCompatActivity() {
         val escalaRec = intent.getIntExtra("escala", 0)
         val cantidadRec = intent.getIntExtra("cantidad", 0)
         val imagenRec = intent.getStringExtra("imagen") ?: ""
-
+        var cambioRec = intent.getIntExtra("cambio", 0)
 
         val campoNombre = findViewById<TextView>(R.id.card_nameDMon)
         val campoCategoria = findViewById<TextView>(R.id.categoriaDMon)
@@ -48,6 +51,22 @@ class DetallesCartaMon: AppCompatActivity() {
 
         val botonEdit = findViewById<Button>(R.id.edit_btnMon)
         val botonDel = findViewById<Button>(R.id.delete_btnMon)
+        val colecion_btn = findViewById<Button>(R.id.coleccion_btn)
+
+        val databaseHelper = DatabaseHelper(this@DetallesCartaMon)
+        val lista = databaseHelper.getAllMonstruos()
+
+        for(monstruo in lista){
+            if(monstruo.id == idRec){
+                cambioRec = if (monstruo.cambio) 1 else 0
+            }
+        }
+
+        if( cambioRec == 0){
+            colecion_btn.setText("Mandar a cambio")
+        }else{
+            colecion_btn.setText("Quitar de Cambio")
+        }
 
         Glide.with(this)
             .load(imagenRec)
@@ -65,37 +84,35 @@ class DetallesCartaMon: AppCompatActivity() {
         campoDefensa.setText(defensaRec.toString())
         campoEscala.setText(escalaRec.toString())
 
-        if(categoria2Rec == "Xyz"){
+        if (categoria2Rec == "Xyz") {
             textoNivel.setText("Rango:")
-        }
-        else if(categoria2Rec == "Link"){
+        } else if (categoria2Rec == "Link") {
             textoNivel.setText("Link:")
             campoDefensa.visibility = View.INVISIBLE
-        }
-        else{
+        } else {
             textoNivel.setText("Nivel:")
         }
 
         textoEscala.visibility = View.INVISIBLE
         campoEscala.visibility = View.INVISIBLE
 
-        if(categoria2Rec == "Pendulo"){
+        if (categoria2Rec == "Pendulo") {
             textoEscala.visibility = View.VISIBLE
             campoEscala.visibility = View.VISIBLE
         }
 
-        botonEdit.setOnClickListener{
+        botonEdit.setOnClickListener {
             val intent = Intent(applicationContext, EditMonCard::class.java)
 
             intent.putExtra("id", idRec)
             intent.putExtra("categoria", categoriaRec)
             intent.putExtra("categoria2", categoria2Rec)
             intent.putExtra("nombre", nombreRec)
-            intent.putExtra("atributo",atributoRec)
-            intent.putExtra("nivel",nivelRec)
+            intent.putExtra("atributo", atributoRec)
+            intent.putExtra("nivel", nivelRec)
             intent.putExtra("tipo", tipoRec)
-            intent.putExtra("ataque",ataqueRec)
-            intent.putExtra("defensa",defensaRec)
+            intent.putExtra("ataque", ataqueRec)
+            intent.putExtra("defensa", defensaRec)
             intent.putExtra("codigo", codigoRec)
             intent.putExtra("escala", escalaRec)
             intent.putExtra("cantidad", cantidadRec)
@@ -104,7 +121,7 @@ class DetallesCartaMon: AppCompatActivity() {
             startActivity(intent)
         }
 
-        botonDel.setOnClickListener{
+        botonDel.setOnClickListener {
 
             val builder = AlertDialog.Builder(this)
             builder.setTitle("¿Estás seguro?")
@@ -120,5 +137,258 @@ class DetallesCartaMon: AppCompatActivity() {
 
         }
 
+        campoCategoria.setOnClickListener {
+
+            val intent = Intent(applicationContext, Filtrado_list::class.java)
+
+            intent.putExtra("nombre", "")
+            intent.putExtra("categoria", categoriaRec)
+            intent.putExtra("tipo", "")
+            intent.putExtra("codigo", "")
+            intent.putExtra("categoria2", "")
+            intent.putExtra("nivel", 0)
+            intent.putExtra("nivel2", 12)
+            intent.putExtra("ataque", 0)
+            intent.putExtra("ataque2", 9000)
+            intent.putExtra("defensa", 0)
+            intent.putExtra("defensa2", 9000)
+            intent.putExtra("atributo", "")
+            intent.putExtra("escala", 0)
+            intent.putExtra("escala2", 13)
+
+            startActivity(intent)
+
+        }
+
+        campoAtributo.setOnClickListener {
+            val intent = Intent(applicationContext, Filtrado_list::class.java)
+
+
+            intent.putExtra("nombre", "")
+            intent.putExtra("categoria", categoriaRec)
+            intent.putExtra("tipo", "")
+            intent.putExtra("codigo", "")
+            intent.putExtra("categoria2", "")
+            intent.putExtra("nivel", 0)
+            intent.putExtra("nivel2", 12)
+            intent.putExtra("ataque", 0)
+            intent.putExtra("ataque2", 9000)
+            intent.putExtra("defensa", 0)
+            intent.putExtra("defensa2", 9000)
+            intent.putExtra("atributo", atributoRec)
+            intent.putExtra("escala", 0)
+            intent.putExtra("escala2", 13)
+
+            startActivity(intent)
+        }
+
+        campoTipo.setOnClickListener{
+            val intent = Intent(applicationContext, Filtrado_list::class.java)
+
+
+            intent.putExtra("nombre", "")
+            intent.putExtra("categoria", categoriaRec)
+            intent.putExtra("tipo", tipoRec)
+            intent.putExtra("codigo", "")
+            intent.putExtra("categoria2", "")
+            intent.putExtra("nivel", 0)
+            intent.putExtra("nivel2", 12)
+            intent.putExtra("ataque", 0)
+            intent.putExtra("ataque2", 9000)
+            intent.putExtra("defensa", 0)
+            intent.putExtra("defensa2", 9000)
+            intent.putExtra("atributo", "")
+            intent.putExtra("escala", 0)
+            intent.putExtra("escala2", 13)
+
+            startActivity(intent)
+        }
+
+        campoCodigo.setOnClickListener {
+
+            val intent = Intent(applicationContext, Filtrado_list::class.java)
+
+            intent.putExtra("nombre", "")
+            intent.putExtra("categoria", categoriaRec)
+            intent.putExtra("tipo", "")
+            intent.putExtra("codigo", codigoRec)
+            intent.putExtra("categoria2", "")
+            intent.putExtra("nivel", 0)
+            intent.putExtra("nivel2", 12)
+            intent.putExtra("ataque", 0)
+            intent.putExtra("ataque2", 9000)
+            intent.putExtra("defensa", 0)
+            intent.putExtra("defensa2", 9000)
+            intent.putExtra("atributo", "")
+            intent.putExtra("escala", 0)
+            intent.putExtra("escala2", 13)
+
+            startActivity(intent)
+
+        }
+
+        campoCategoria2.setOnClickListener {
+
+            val intent = Intent(applicationContext, Filtrado_list::class.java)
+
+            intent.putExtra("nombre", "")
+            intent.putExtra("categoria", categoriaRec)
+            intent.putExtra("tipo", "")
+            intent.putExtra("codigo", "")
+            intent.putExtra("categoria2", categoria2Rec)
+            intent.putExtra("nivel", 0)
+            intent.putExtra("nivel2", 12)
+            intent.putExtra("ataque", 0)
+            intent.putExtra("ataque2", 9000)
+            intent.putExtra("defensa", 0)
+            intent.putExtra("defensa2", 9000)
+            intent.putExtra("atributo", "")
+            intent.putExtra("escala", 0)
+            intent.putExtra("escala2", 13)
+
+            startActivity(intent)
+
+        }
+
+        campoNivel.setOnClickListener {
+
+            val intent = Intent(applicationContext, Filtrado_list::class.java)
+
+            intent.putExtra("nombre", "")
+            intent.putExtra("categoria", categoriaRec)
+            intent.putExtra("tipo", "")
+            intent.putExtra("codigo", "")
+            intent.putExtra("categoria2", "")
+            intent.putExtra("nivel", nivelRec)
+            intent.putExtra("nivel2", nivelRec)
+            intent.putExtra("ataque", 0)
+            intent.putExtra("ataque2", 9000)
+            intent.putExtra("defensa", 0)
+            intent.putExtra("defensa2", 9000)
+            intent.putExtra("atributo", "")
+            intent.putExtra("escala", 0)
+            intent.putExtra("escala2", 13)
+
+            startActivity(intent)
+
+        }
+
+        campoAtaque.setOnClickListener {
+
+            val intent = Intent(applicationContext, Filtrado_list::class.java)
+
+            intent.putExtra("nombre", "")
+            intent.putExtra("categoria", categoriaRec)
+            intent.putExtra("tipo", "")
+            intent.putExtra("codigo", "")
+            intent.putExtra("categoria2", "")
+            intent.putExtra("nivel", 0)
+            intent.putExtra("nivel2", 12)
+            intent.putExtra("ataque", ataqueRec)
+            intent.putExtra("ataque2", ataqueRec)
+            intent.putExtra("defensa", 0)
+            intent.putExtra("defensa2", 9000)
+            intent.putExtra("atributo", "")
+            intent.putExtra("escala", 0)
+            intent.putExtra("escala2", 13)
+
+            startActivity(intent)
+
+        }
+
+        campoDefensa.setOnClickListener {
+
+            val intent = Intent(applicationContext, Filtrado_list::class.java)
+
+            intent.putExtra("nombre", "")
+            intent.putExtra("categoria", categoriaRec)
+            intent.putExtra("tipo", "")
+            intent.putExtra("codigo", "")
+            intent.putExtra("categoria2", "")
+            intent.putExtra("nivel", 0)
+            intent.putExtra("nivel2", 12)
+            intent.putExtra("ataque", 0)
+            intent.putExtra("ataque2", 9000)
+            intent.putExtra("defensa", defensaRec)
+            intent.putExtra("defensa2", defensaRec)
+            intent.putExtra("atributo", "")
+            intent.putExtra("escala", 0)
+            intent.putExtra("escala2", 13)
+
+            startActivity(intent)
+
+        }
+
+        campoEscala.setOnClickListener {
+
+            val intent = Intent(applicationContext, Filtrado_list::class.java)
+
+            intent.putExtra("nombre", "")
+            intent.putExtra("categoria", categoriaRec)
+            intent.putExtra("tipo", "")
+            intent.putExtra("codigo", "")
+            intent.putExtra("categoria2", "")
+            intent.putExtra("nivel", 0)
+            intent.putExtra("nivel2", 12)
+            intent.putExtra("ataque", 0)
+            intent.putExtra("ataque2", 9000)
+            intent.putExtra("defensa", 0)
+            intent.putExtra("defensa2", 9000)
+            intent.putExtra("atributo", "")
+            intent.putExtra("escala", escalaRec)
+            intent.putExtra("escala2", escalaRec)
+
+            startActivity(intent)
+
+        }
+
+            campoNombre.setOnClickListener{
+
+                val intent = Intent(applicationContext, Filtrado_list::class.java)
+
+                intent.putExtra("nombre",nombreRec)
+                intent.putExtra("categoria","")
+                intent.putExtra("tipo", "")
+                intent.putExtra("codigo", "")
+                intent.putExtra("categoria2", "")
+                intent.putExtra("nivel", 0)
+                intent.putExtra("nivel2",12)
+                intent.putExtra("ataque", 0)
+                intent.putExtra("ataque2", 9000)
+                intent.putExtra("defensa", 0)
+                intent.putExtra("defensa2", 9000)
+                intent.putExtra("atributo", "")
+                intent.putExtra("escala", 0)
+                intent.putExtra("escala2", 13)
+
+                startActivity(intent)
+            }
+
+
+        colecion_btn.setOnClickListener{
+
+            var cambio: Boolean = false
+
+            for(monstruo in lista){
+                if(monstruo.id == idRec){
+                    cambio = monstruo.cambio
+                }
+            }
+
+            if(cambio == false){
+                colecion_btn.setText("Quitar de Cambio")
+                cambio = true
+            }
+            else if(cambio == true){
+                colecion_btn.setText("Mandar a cambio")
+                cambio = false
+            }
+
+            val monstruo = Monstruo(idRec, "Monstruo", categoria2Rec, nombreRec, atributoRec, nivelRec, tipoRec,
+                ataqueRec, defensaRec, codigoRec, escalaRec, cantidadRec, imagenRec, cambio)
+
+            databaseHelper.updateMonstruo(monstruo)
+
+        }
     }
 }

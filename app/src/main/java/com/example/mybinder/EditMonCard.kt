@@ -45,6 +45,7 @@ class EditMonCard: AppCompatActivity() {
     private val REQUEST_CAMERA_PERMISSION = 1
     private var currentPhotoPath: String = ""
     private lateinit var imagenV: ImageView
+    private var cambio: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,10 +119,13 @@ class EditMonCard: AppCompatActivity() {
         var valorCategoria = 0
 
         if( categoriaRec == "Magica"){
-            valorCategoria = 1
+            valorCategoria = 2
         }
         else if(categoriaRec == "Trampa"){
-            valorCategoria = 2
+            valorCategoria = 3
+        }
+        else if(categoriaRec =="Monstruo"){
+            valorCategoria = 1
         }
         else{
             valorCategoria = 0
@@ -138,28 +142,28 @@ class EditMonCard: AppCompatActivity() {
         var valorCategoria2 = 0
 
         if( categoria2Rec == "Normal"){
-            valorCategoria2 = 0
-        }
-        else if(categoria2Rec == "Efecto"){
             valorCategoria2 = 1
         }
-        else if(categoria2Rec == "Fusion"){
+        else if(categoria2Rec == "Efecto"){
             valorCategoria2 = 2
         }
-        else if(categoria2Rec == "Ritual"){
+        else if(categoria2Rec == "Fusion"){
             valorCategoria2 = 3
         }
-        else if(categoria2Rec == "Sincronia"){
+        else if(categoria2Rec == "Ritual"){
             valorCategoria2 = 4
         }
-        else if(categoria2Rec == "Xyz"){
+        else if(categoria2Rec == "Sincronia"){
             valorCategoria2 = 5
         }
-        else if(categoria2Rec == "Pendulo"){
+        else if(categoria2Rec == "Xyz"){
             valorCategoria2 = 6
         }
-        else{
+        else if(categoria2Rec == "Pendulo"){
             valorCategoria2 = 7
+        }
+        else{
+            valorCategoria2 = 8
         }
         spinnerCategorias2.setSelection(valorCategoria2)
 
@@ -206,25 +210,25 @@ class EditMonCard: AppCompatActivity() {
         var valorAtributo = 0
 
         if( atributoRec == "Agua"){
-            valorAtributo = 0
-        }
-        else if(atributoRec == "Tierra"){
             valorAtributo = 1
         }
-        else if(atributoRec == "Fuego"){
+        else if(atributoRec == "Tierra"){
             valorAtributo = 2
         }
-        else if(atributoRec == "Viento"){
+        else if(atributoRec == "Fuego"){
             valorAtributo = 3
         }
-        else if(atributoRec == "Oscuridad"){
+        else if(atributoRec == "Viento"){
             valorAtributo = 4
         }
-        else if(atributoRec == "Luz"){
+        else if(atributoRec == "Oscuridad"){
             valorAtributo = 5
         }
-        else{
+        else if(atributoRec == "Luz"){
             valorAtributo = 6
+        }
+        else if(atributoRec == "Divinidad"){
+            valorAtributo = 7
         }
         spinnerAtributo.setSelection(valorAtributo)
 
@@ -258,7 +262,7 @@ class EditMonCard: AppCompatActivity() {
                 id: Long
             ) {
                 when (position) {
-                    0 -> {
+                    1 -> {
                         categoria = "Monstruo"
 
                         spinnerCategorias2.visibility = View.VISIBLE
@@ -281,76 +285,77 @@ class EditMonCard: AppCompatActivity() {
 
 
                         if( tipoRec == "Aqua"){
-                            valorTipo = 0
-                        }
-                        else if(tipoRec == "Bestia"){
                             valorTipo = 1
                         }
-                        else if(tipoRec == "Bestia-Alada"){
+                        else if(tipoRec == "Bestia"){
                             valorTipo = 2
                         }
-                        else if(tipoRec == "Bestia Divina"){
+                        else if(tipoRec == "Bestia-Alada"){
                             valorTipo = 3
                         }
-                        else if(tipoRec == "Bestia-guerrero"){
+                        else if(tipoRec == "Bestia Divina"){
                             valorTipo = 4
                         }
-                        else if(tipoRec == "Ciberso"){
+                        else if(tipoRec == "Bestia-guerrero"){
                             valorTipo = 5
                         }
-                        else if(tipoRec == "Demonio"){
+                        else if(tipoRec == "Ciberso"){
                             valorTipo = 6
                         }
-                        else if(tipoRec == "Dragón"){
+                        else if(tipoRec == "Demonio"){
                             valorTipo = 7
                         }
-                        else if(tipoRec == "Dinosurio"){
-                            valorTipo = 8
+                        else if(tipoRec == "Dragón"){
+                            valorTipo =8
+
                         }
-                        else if(tipoRec == "Guerrero"){
+                        else if(tipoRec == "Dinosurio"){
                             valorTipo = 9
                         }
-                        else if(tipoRec == "Hada"){
+                        else if(tipoRec == "Guerrero"){
                             valorTipo = 10
                         }
-                        else if(tipoRec == "Insecto"){
+                        else if(tipoRec == "Hada"){
                             valorTipo = 11
                         }
-                        else if(tipoRec == "Lanzador de conjuros"){
+                        else if(tipoRec == "Insecto"){
                             valorTipo = 12
                         }
-                        else if(tipoRec == "Maquina"){
+                        else if(tipoRec == "Lanzador de conjuros"){
                             valorTipo = 13
                         }
-                        else if(tipoRec == "Pez"){
+                        else if(tipoRec == "Maquina"){
                             valorTipo = 14
                         }
-                        else if(tipoRec == "Planta"){
+                        else if(tipoRec == "Pez"){
                             valorTipo = 15
                         }
-                        else if(tipoRec == "Pyro"){
+                        else if(tipoRec == "Planta"){
                             valorTipo = 16
                         }
-                        else if(tipoRec == "Psíquico"){
+                        else if(tipoRec == "Pyro"){
                             valorTipo = 17
                         }
-                        else if(tipoRec == "Reptil"){
+                        else if(tipoRec == "Psíquico"){
                             valorTipo = 18
                         }
-                        else if(tipoRec == "Roca"){
+                        else if(tipoRec == "Reptil"){
                             valorTipo = 19
                         }
-                        else if(tipoRec == "Serpiente marina"){
+                        else if(tipoRec == "Roca"){
                             valorTipo = 20
                         }
-                        else if(tipoRec == "Trueno"){
+                        else if(tipoRec == "Serpiente marina"){
                             valorTipo = 21
                         }
-                        else if(tipoRec == "Wyrm"){
+                        else if(tipoRec == "Trueno"){
                             valorTipo = 22
                         }
-                        else{
+                        else if(tipoRec == "Wyrm"){
                             valorTipo = 23
+                        }
+                        else{
+                            valorTipo = 24
                         }
                         spinnerTipo.setSelection(valorTipo)
 
@@ -372,7 +377,7 @@ class EditMonCard: AppCompatActivity() {
                             }
 
                     }
-                    1 -> {
+                    2 -> {
                         categoria = "Magica"
 
                         spinnerCategorias2.visibility = View.INVISIBLE
@@ -397,22 +402,22 @@ class EditMonCard: AppCompatActivity() {
 
 
                         if( tipoRec == "Normal"){
-                            valorTipo = 0
-                        }
-                        else if (tipoRec == "Juego Rapido"){
                             valorTipo = 1
                         }
-                        else if (tipoRec == "Continua"){
+                        else if (tipoRec == "Juego Rapido"){
                             valorTipo = 2
                         }
-                        else if (tipoRec == "Ritual"){
+                        else if (tipoRec == "Continua"){
                             valorTipo = 3
                         }
-                        else if (tipoRec == "Equipo"){
+                        else if (tipoRec == "Ritual"){
                             valorTipo = 4
                         }
-                        else if(tipoRec == "Campo"){
+                        else if (tipoRec == "Equipo"){
                             valorTipo = 5
+                        }
+                        else if(tipoRec == "Campo"){
+                            valorTipo = 6
                         }
                         spinnerTipo.setSelection(valorTipo)
                         spinnerTipo.onItemSelectedListener =
@@ -433,7 +438,7 @@ class EditMonCard: AppCompatActivity() {
 
 
                     }
-                    2 -> {
+                    3 -> {
                         categoria = "Trampa"
 
                         spinnerCategorias2.visibility = View.INVISIBLE
@@ -510,10 +515,21 @@ class EditMonCard: AppCompatActivity() {
             codigo = campoCodigo.text.toString()
 
             if(categoria == "Monstruo") {
-                val monstruo = Monstruo(idRec, "Monstruo", categoria2, nombre, atributo, nivel, tipo,
-                    ataque, defensa, codigo, escala, cantidad, currentPhotoPath)
-                Toast.makeText(this, "Carta Editada!", Toast.LENGTH_SHORT).show()
+
                 val databaseHelper = DatabaseHelper(this@EditMonCard)
+
+                var lista = databaseHelper.getAllMonstruos()
+
+                for(monstruo in lista){
+                   if(monstruo.id == idRec){
+                       cambio = monstruo.cambio
+                   }
+                }
+
+                val monstruo = Monstruo(idRec, "Monstruo", categoria2, nombre, atributo, nivel, tipo,
+                    ataque, defensa, codigo, escala, cantidad, currentPhotoPath, cambio)
+                Toast.makeText(this, "Carta Editada!", Toast.LENGTH_SHORT).show()
+
 
                 if(cantidad > 0) {
 
@@ -527,8 +543,17 @@ class EditMonCard: AppCompatActivity() {
                 }
             }
             else{
-                val spell_trap = Spells_Traps(0, nombre,categoria,tipo,codigo,cantidad,currentPhotoPath)
                 val databaseHelper = DatabaseHelper(this@EditMonCard)
+
+                var lista = databaseHelper.getAllMonstruos()
+
+                for(monstruo in lista){
+                    if(monstruo.id == idRec){
+                        cambio = monstruo.cambio
+                    }
+                }
+                val spell_trap = Spells_Traps(0, nombre,categoria,tipo,codigo,cantidad,currentPhotoPath, cambio)
+
                 if(cantidad > 0) {
 
                     databaseHelper.deleteMonstruo(idRec)

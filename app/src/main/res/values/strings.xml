@@ -7,12 +7,14 @@
 
 
     <string-array name="categorias">
+        <item></item>
         <item>Monstruo</item>
         <item>Magica</item>
         <item>Trampa</item>
     </string-array>
 
     <string-array name="categoria2M">
+        <item></item>
         <item>Normal</item>
         <item>Efecto</item>
         <item>Fusion</item>
@@ -24,6 +26,7 @@
     </string-array>
 
     <string-array name="tipoM">
+        <item></item>
         <item>Aqua</item>
         <item>Bestia</item>
         <item>Bestia-Alada</item>
@@ -51,6 +54,7 @@
     </string-array>
 
     <string-array name="tipoS">
+        <item></item>
         <item>Normal</item>
         <item>Juego Rapido</item>
         <item>Continua</item>
@@ -60,12 +64,90 @@
     </string-array>
 
     <string-array name="tipoT">
+        <item></item>
         <item>Normal</item>
         <item>Continua</item>
         <item>Counter</item>
     </string-array>
 
     <string-array name="atributo">
+        <item></item>
+        <item>Agua</item>
+        <item>Tierra</item>
+        <item>Fuego</item>
+        <item>Viento</item>
+        <item>Oscuridad</item>
+        <item>Luz</item>
+        <item>Divinidad</item>
+    </string-array>
+
+
+    <string-array name="categoriasFil">
+        <item></item>
+        <item>Monstruo</item>
+        <item>Magica</item>
+        <item>Trampa</item>
+    </string-array>
+
+    <string-array name="categoria2MFil">
+        <item></item>
+        <item>Normal</item>
+        <item>Efecto</item>
+        <item>Fusion</item>
+        <item>Ritual</item>
+        <item>Sincronia</item>
+        <item>Xyz</item>
+        <item>Pendulo</item>
+        <item>Link</item>
+    </string-array>
+
+    <string-array name="tipoMFil">
+        <item></item>
+        <item>Aqua</item>
+        <item>Bestia</item>
+        <item>Bestia-Alada</item>
+        <item>Bestia Divina</item>
+        <item>Bestia-guerrero</item>
+        <item>Ciberso</item>
+        <item>Demonio</item>
+        <item>Dragón</item>
+        <item>Dinosurio</item>
+        <item>Guerrero</item>
+        <item>Hada</item>
+        <item>Insecto</item>
+        <item>Lanzador de conjuros</item>
+        <item>Maquina</item>
+        <item>Pez</item>
+        <item>Planta</item>
+        <item>Pyro</item>
+        <item>Psíquico</item>
+        <item>Reptil</item>
+        <item>Roca</item>
+        <item>Serpiente marina</item>
+        <item>Trueno</item>
+        <item>Wyrm</item>
+        <item>Zombie</item>
+    </string-array>
+
+    <string-array name="tipoSFil">
+        <item></item>
+        <item>Normal</item>
+        <item>Juego Rapido</item>
+        <item>Continua</item>
+        <item>Ritual</item>
+        <item>Equipo</item>
+        <item>Campo</item>
+    </string-array>
+
+    <string-array name="tipoTFil">
+        <item></item>
+        <item>Normal</item>
+        <item>Continua</item>
+        <item>Counter</item>
+    </string-array>
+
+    <string-array name="atributoFil">
+        <item></item>
         <item>Agua</item>
         <item>Tierra</item>
         <item>Fuego</item>

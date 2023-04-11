@@ -47,8 +47,10 @@ class EditSTCard: AppCompatActivity() {
     private var imagen: ImageView? = null
     private val REQUEST_CAMERA_PERMISSION = 1
     private var currentPhotoPath: String = ""
+    private var cambio: Boolean = false
 
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_st_card)
@@ -112,10 +114,10 @@ class EditSTCard: AppCompatActivity() {
         var valorCa = 0
 
                 if( categoriaRecibido == "Magica"){
-                   valorCa = 1
+                   valorCa = 2
                 }
                 else{
-                     valorCa = 2
+                     valorCa = 3
                 }
                 spinnerCategorias.setSelection(valorCa)
 
@@ -196,7 +198,7 @@ class EditSTCard: AppCompatActivity() {
                 id: Long
             ) {
                 when (position) {
-                    0 -> {
+                    1 -> {
                         categoria = "Monstruo"
 
                         spinnerCategorias2.visibility = View.VISIBLE
@@ -233,7 +235,7 @@ class EditSTCard: AppCompatActivity() {
                             }
 
                     }
-                    1 -> {
+                    2 -> {
                         categoria = "Magica"
 
                         spinnerCategorias2.visibility = View.INVISIBLE
@@ -258,22 +260,22 @@ class EditSTCard: AppCompatActivity() {
 
 
                                 if( tipoRecibido == "Normal"){
-                                    valorTipo = 0
-                                }
-                                else if (tipoRecibido == "Juego Rapido"){
                                     valorTipo = 1
                                 }
-                                else if (tipoRecibido == "Continua"){
+                                else if (tipoRecibido == "Juego Rapido"){
                                     valorTipo = 2
                                 }
-                                else if (tipoRecibido == "Ritual"){
+                                else if (tipoRecibido == "Continua"){
                                     valorTipo = 3
                                 }
-                                else if (tipoRecibido == "Equipo"){
+                                else if (tipoRecibido == "Ritual"){
                                     valorTipo = 4
                                 }
-                                else if(tipoRecibido == "Campo"){
+                                else if (tipoRecibido == "Equipo"){
                                     valorTipo = 5
+                                }
+                                else if(tipoRecibido == "Campo"){
+                                    valorTipo = 6
                                 }
                                 spinnerTipo.setSelection(valorTipo)
                         spinnerTipo.onItemSelectedListener =
@@ -294,7 +296,7 @@ class EditSTCard: AppCompatActivity() {
 
 
                     }
-                    2 -> {
+                    3 -> {
                         categoria = "Trampa"
 
                         spinnerCategorias2.visibility = View.INVISIBLE
@@ -318,13 +320,13 @@ class EditSTCard: AppCompatActivity() {
                         var valorTipo = 0
 
                                 if( tipoRecibido == "Normal"){
-                                    valorTipo = 0
-                                }
-                                else if (tipoRecibido == "Continua"){
                                     valorTipo = 1
                                 }
-                                else if (tipoRecibido == "Counter"){
+                                else if (tipoRecibido == "Continua"){
                                     valorTipo = 2
+                                }
+                                else if (tipoRecibido == "Counter"){
+                                    valorTipo = 3
                                 }
                                 spinnerTipo.setSelection(valorTipo)
 
@@ -384,18 +386,35 @@ class EditSTCard: AppCompatActivity() {
             codigo = campoCodigo.text.toString()
 
             if(categoria == "Monstruo") {
-                val monstruo = Monstruo(0, "Monstruo", categoria2, nombre, atributo, nivel, tipo,
-                    ataque, defensa, codigo, escala, cantidad, currentPhotoPath)
-                Toast.makeText(this, "Carta Editada!", Toast.LENGTH_SHORT).show()
 
                 val databaseHelper = DatabaseHelper(this@EditSTCard)
+                var lista = databaseHelper.getAllSpellTraps()
+
+                for(spellTrap in lista){
+                    if(spellTrap.id == idRecibido){
+                        cambio = spellTrap.cambio
+                    }
+                }
+
+                val monstruo = Monstruo(0, "Monstruo", categoria2, nombre, atributo, nivel, tipo,
+                    ataque, defensa, codigo, escala, cantidad, currentPhotoPath, cambio)
+                Toast.makeText(this, "Carta Editada!", Toast.LENGTH_SHORT).show()
 
                 databaseHelper.insertMonstruo(monstruo)
                 databaseHelper.deleteSpellTrap(idRecibido)
             }
             else{
-                val spell_trap = Spells_Traps(idRecibido, nombre,categoria,tipo,codigo,cantidad,currentPhotoPath)
                 val databaseHelper = DatabaseHelper(this@EditSTCard)
+                var lista = databaseHelper.getAllSpellTraps()
+
+                for(spellTrap in lista){
+                    if(spellTrap.id == idRecibido){
+                        cambio = spellTrap.cambio
+                    }
+                }
+
+                val spell_trap = Spells_Traps(idRecibido, nombre,categoria,tipo,codigo,cantidad,currentPhotoPath, cambio)
+
 
                 if(cantidad > 0) {
 

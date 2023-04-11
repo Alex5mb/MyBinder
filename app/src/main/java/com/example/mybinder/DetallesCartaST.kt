@@ -8,9 +8,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.mybinder.Model.Spells_Traps
 import com.example.mybinder.controllers.DatabaseHelper
 
 class DetallesCartaST: AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detalles_st_layout)
@@ -22,7 +24,10 @@ class DetallesCartaST: AppCompatActivity() {
         val cantidadRecibido = intent.getIntExtra("cantidad",0)
         val nombreRecibido = intent.getStringExtra("nombre")
         val imagenRecibido = intent.getStringExtra("imagen")
+        var cambioRecibido = intent.getIntExtra("cambio", 0)
 
+        val databaseHelper = DatabaseHelper(this@DetallesCartaST)
+        val lista = databaseHelper.getAllSpellTraps()
 
         val campoNombre = findViewById<TextView>(R.id.card_nameDST)
         val campoImagen = findViewById<ImageView>(R.id.imageViewDST)
@@ -33,6 +38,20 @@ class DetallesCartaST: AppCompatActivity() {
 
         val botonEdit = findViewById<Button>(R.id.edit_btnST)
         val botonDel = findViewById<Button>(R.id.delete_btnST)
+        val colecion_btn = findViewById<Button>(R.id.coleccion_btn)
+
+
+        for(spell in lista){
+            if(spell.id == idRecibido){
+                cambioRecibido = if (spell.cambio) 1 else 0
+            }
+        }
+
+        if( cambioRecibido == 0){
+            colecion_btn.setText("Mandar a cambio")
+        }else{
+            colecion_btn.setText("Quitar de Cambio")
+        }
 
         campoNombre.setText(nombreRecibido)
         campoTipo.setText(tipoRecibido)
@@ -74,7 +93,118 @@ class DetallesCartaST: AppCompatActivity() {
             builder.show()
 
         }
+        campoCategoria.setOnClickListener{
 
+            val intent = Intent(applicationContext, Filtrado_list::class.java)
 
+            intent.putExtra("nombre","")
+            intent.putExtra("categoria", categoriaRecibido)
+            intent.putExtra("tipo", "")
+            intent.putExtra("codigo", "")
+            intent.putExtra("categoria2", "")
+            intent.putExtra("nivel", 0)
+            intent.putExtra("nivel2",12)
+            intent.putExtra("ataque", 0)
+            intent.putExtra("ataque2", 9000)
+            intent.putExtra("defensa", 0)
+            intent.putExtra("defensa2", 9000)
+            intent.putExtra("atributo", "")
+            intent.putExtra("escala", 0)
+            intent.putExtra("escala2", 13)
+
+            startActivity(intent)
+        }
+
+        campoTipo.setOnClickListener {
+
+            val intent = Intent(applicationContext, Filtrado_list::class.java)
+
+            intent.putExtra("nombre", "")
+            intent.putExtra("categoria", categoriaRecibido)
+            intent.putExtra("tipo", tipoRecibido)
+            intent.putExtra("codigo", "")
+            intent.putExtra("categoria2", "")
+            intent.putExtra("nivel", 0)
+            intent.putExtra("nivel2", 12)
+            intent.putExtra("ataque", 0)
+            intent.putExtra("ataque2", 9000)
+            intent.putExtra("defensa", 0)
+            intent.putExtra("defensa2", 9000)
+            intent.putExtra("atributo", "")
+            intent.putExtra("escala", 0)
+            intent.putExtra("escala2", 13)
+
+            startActivity(intent)
+
+        }
+
+        campoCodigo.setOnClickListener{
+
+            val intent = Intent(applicationContext, Filtrado_list::class.java)
+
+            intent.putExtra("nombre","")
+            intent.putExtra("categoria", categoriaRecibido)
+            intent.putExtra("tipo", "")
+            intent.putExtra("codigo", codigoRecibido)
+            intent.putExtra("categoria2", "")
+            intent.putExtra("nivel", 0)
+            intent.putExtra("nivel2",12)
+            intent.putExtra("ataque", 0)
+            intent.putExtra("ataque2", 9000)
+            intent.putExtra("defensa", 0)
+            intent.putExtra("defensa2", 9000)
+            intent.putExtra("atributo", "")
+            intent.putExtra("escala", 0)
+            intent.putExtra("escala2", 13)
+
+            startActivity(intent)
+        }
+
+        campoNombre.setOnClickListener{
+
+            val intent = Intent(applicationContext, Filtrado_list::class.java)
+
+            intent.putExtra("nombre",nombreRecibido)
+            intent.putExtra("categoria","")
+            intent.putExtra("tipo", "")
+            intent.putExtra("codigo", "")
+            intent.putExtra("categoria2", "")
+            intent.putExtra("nivel", 0)
+            intent.putExtra("nivel2",12)
+            intent.putExtra("ataque", 0)
+            intent.putExtra("ataque2", 9000)
+            intent.putExtra("defensa", 0)
+            intent.putExtra("defensa2", 9000)
+            intent.putExtra("atributo", "")
+            intent.putExtra("escala", 0)
+            intent.putExtra("escala2", 13)
+
+            startActivity(intent)
+        }
+
+        colecion_btn.setOnClickListener{
+
+            var cambio: Boolean = false
+
+            for(spell in lista){
+                if(spell.id == idRecibido){
+                    cambio = spell.cambio
+                }
+            }
+
+            if(cambio == false){
+                colecion_btn.setText("Quitar de Cambio")
+                cambio = true
+            }
+            else if(cambio == true){
+                colecion_btn.setText("Mandar a cambio")
+                cambio = false
+            }
+
+            val spell_trap = Spells_Traps(idRecibido,nombreRecibido ,categoriaRecibido,tipoRecibido,codigoRecibido,cantidadRecibido,imagenRecibido, cambio)
+
+            databaseHelper.updateSpellTrap(spell_trap)
+
+        }
     }
 }
