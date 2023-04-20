@@ -6,6 +6,8 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.example.mybinder.Model.Carta
+import com.example.mybinder.Model.Mazo
 import com.example.mybinder.Model.Monstruo
 import com.example.mybinder.Model.Spells_Traps
 import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.COL_ATAQUE
@@ -18,14 +20,16 @@ import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Compa
 import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.COL_DEFENSA
 import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.COL_ESCALA
 import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.COL_ID
+import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.COL_IDMAZO
 import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.COL_IMAGEN
 import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.COL_NIVEL
 import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.COL_NOMBRE
 import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.COL_TIPO
 import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.DATABASE_NAME
+import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.TABLE_INTERMEDIA
+import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.TABLE_MAZO
 import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.TABLE_MONSTRUOS
 import com.example.mybinder.controllers.MonstruoContract.Companion.Entrada.Companion.TABLE_SPELL_TRAP
-
 
 
 
@@ -66,30 +70,100 @@ class DatabaseHelper(context: Context):
             )
         """.trimIndent()
 
+        val createTableMazo = """
+            CREATE TABLE $TABLE_MAZO (
+                $COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                $COL_NOMBRE TEXT
+            )
+        """.trimIndent()
+
+        val createTableIntermedia = """
+             CREATE TABLE $TABLE_INTERMEDIA(
+                $COL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                $COL_IMAGEN TEXT,
+                $COL_IDMAZO INTEGER
+            )
+        """.trimIndent()
+
+        val dropTableMazo = "DROP TABLE IF EXISTS $TABLE_MAZO"
 
     }
 
-
     override fun onCreate(db: SQLiteDatabase?) {
+
+        //db?.execSQL(dropTableMazo)
+        db?.execSQL(createTableMazo)
+        db?.execSQL(createTableIntermedia)
+
         db?.execSQL(createTableMonstruos)
         db?.execSQL(createTableSpellTrap)
+
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_MONSTRUOS")
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_SPELL_TRAP")
+        db?.execSQL("DROP TABLE IF EXISTS $TABLE_MAZO")
         onCreate(db)
     }
 
-    fun insertImagePath(imagePath: String): Long {
-        val values = ContentValues().apply {
 
-            put( COL_IMAGEN, imagePath)
+    @SuppressLint("Range")
+    fun obtenerImagenesIntermedia(database: SQLiteDatabase, mazoId: Int): ArrayList<Carta> {
+        val imagenes = ArrayList<Carta>()
+        val query = "SELECT * FROM $TABLE_INTERMEDIA WHERE $COL_IDMAZO = ?"
+        val cursor = database.rawQuery(query, arrayOf(mazoId.toString()))
+        while (cursor.moveToNext()) {
+            val id = cursor.getInt(cursor.getColumnIndex(COL_ID))
+            val imagen = cursor.getString(cursor.getColumnIndex(COL_IMAGEN))
+            imagenes.add(Carta(id,imagen,mazoId))
         }
+        cursor.close()
+        return imagenes
+    }
+
+    fun insertMazo(mazo: Mazo){
         val db = writableDatabase
-        val id = db.insert(TABLE_MONSTRUOS, null, values)
+
+        val values = ContentValues().apply {
+            put(COL_NOMBRE, mazo.nombre)
+        }
+        db.insert(TABLE_MAZO,null,values)
         db.close()
-        return id
+
+    }
+    fun obtenerUltimoIdDeTablaMazo(contexto: Context): Int {
+        val dbHelper = DatabaseHelper(contexto)
+        val db = dbHelper.readableDatabase
+
+        val query = "SELECT MAX($COL_ID) FROM $TABLE_MAZO"
+        val cursor = db.rawQuery(query, null)
+
+        val ultimoId = if (cursor.moveToFirst()) cursor.getInt(0) else 0
+
+        cursor.close()
+        db.close()
+
+        return ultimoId
+    }
+
+
+
+    fun insertCard_Mazo(id: Int, carta: Carta){
+        val db = writableDatabase
+
+        val values = ContentValues().apply {
+          put(COL_IMAGEN, carta.imagen)
+          put(COL_IDMAZO, id)
+        }
+        db.insert(TABLE_INTERMEDIA,null,values)
+        db.close()
+    }
+
+    fun deleteAllMazos() {
+        val db = writableDatabase
+        db.delete(TABLE_MAZO, null, null)
+        db.close()
     }
 
     fun insertMonstruo(monstruo: Monstruo) {
@@ -154,6 +228,15 @@ class DatabaseHelper(context: Context):
         db.close()
     }
 
+    fun updateMazo(mazo:Mazo){
+        val db = writableDatabase
+        val values = ContentValues().apply{
+            put(COL_NOMBRE, mazo.nombre)
+        }
+        db.update(TABLE_MAZO,values,"$COL_ID = ?", arrayOf(mazo.id.toString()))
+        db.close()
+    }
+
     fun updateSpellTrap(spellTrap: Spells_Traps) {
         val db = writableDatabase
         val values = ContentValues().apply {
@@ -167,6 +250,35 @@ class DatabaseHelper(context: Context):
         }
 
         db.update(TABLE_SPELL_TRAP, values, "$COL_ID = ?", arrayOf(spellTrap.id.toString()))
+        db.close()
+    }
+
+    fun deleteAllCardDeck(id:Int){
+        val db = writableDatabase
+        db.delete(
+            TABLE_INTERMEDIA,
+            "$COL_IDMAZO = ?",
+            arrayOf(id.toString())
+        )
+        db.close()
+    }
+
+    fun deleteDeck(id: Int) {
+        val db = writableDatabase
+        db.delete(
+            TABLE_MAZO,
+            "$COL_ID = ?",
+            arrayOf(id.toString())
+        )
+        db.close()
+    }
+    fun deleteTablaIntermedia(id: Int) {
+        val db = writableDatabase
+        db.delete(
+            TABLE_INTERMEDIA,
+            "$COL_ID = ?",
+            arrayOf(id.toString())
+        )
         db.close()
     }
 
@@ -223,6 +335,26 @@ class DatabaseHelper(context: Context):
         return monstruosList
     }
 
+    fun gerAllDecks(): ArrayList<Mazo>{
+        val list = ArrayList<Mazo>()
+        val db = readableDatabase
+        val cursor: Cursor? = db.rawQuery("SELECT * FROM $TABLE_MAZO", null)
+        cursor?.let {
+            if (cursor.moveToFirst()) {
+                do {
+                    val id = it.getInt(0)
+                    val nombre = it.getString(1)
+                    val mazo = Mazo(id, nombre)
+                    list.add(mazo)
+
+                } while (cursor.moveToNext())
+            }
+            cursor.close()
+        }
+        db.close()
+        return list
+    }
+
 
     fun getAllSpellTraps(): ArrayList<Spells_Traps> {
         val list = ArrayList<Spells_Traps>()
@@ -248,6 +380,7 @@ class DatabaseHelper(context: Context):
         db.close()
         return list
     }
+
 
     @SuppressLint("Range")
     fun buscarMonstruos(nombre: String?, categoria: String?, tipo: String?, codigo: String?,
@@ -332,39 +465,6 @@ class DatabaseHelper(context: Context):
         return spellTraps
     }
 
-    @SuppressLint("Range")
-    fun buscarMonstruosPorCategoria(categoria: String): List<Monstruo> {
-        val db = readableDatabase
-        val query = "SELECT * FROM $TABLE_MONSTRUOS WHERE categoria = ?"
-        val cursor = db.rawQuery(query, arrayOf(categoria))
-
-        val monstruos = mutableListOf<Monstruo>()
-
-        while (cursor.moveToNext()) {
-            val id = cursor.getInt(cursor.getColumnIndex(COL_ID))
-            val nombre = cursor.getString(cursor.getColumnIndex(COL_NOMBRE))
-            val categoria = cursor.getString(cursor.getColumnIndex(COL_CATEGORIA))
-            val categoria2 = cursor.getString(cursor.getColumnIndex(COL_CATEGORIA2))
-            val atributo = cursor.getString(cursor.getColumnIndex(COL_ATRIBUTO))
-            val nivel = cursor.getInt(cursor.getColumnIndex(COL_NIVEL))
-            val tipo = cursor.getString(cursor.getColumnIndex(COL_TIPO))
-            val ataque = cursor.getInt(cursor.getColumnIndex(COL_ATAQUE))
-            val defensa = cursor.getInt(cursor.getColumnIndex(COL_DEFENSA))
-            val codigo = cursor.getString(cursor.getColumnIndex(COL_CODIGO))
-            val escala = cursor.getInt(cursor.getColumnIndex(COL_ESCALA))
-            val cantidad = cursor.getInt(cursor.getColumnIndex(COL_CANTIDAD))
-            val imagen = cursor.getString(cursor.getColumnIndex(COL_IMAGEN))
-            val cambio = cursor.getInt(cursor.getColumnIndex(COL_CAMBIO)) == 1
-
-            val monstruo = Monstruo(id, nombre, categoria, categoria2, atributo, nivel, tipo, ataque, defensa, codigo, escala, cantidad, imagen, cambio)
-            monstruos.add(monstruo)
-        }
-
-        cursor.close()
-        db.close()
-
-        return monstruos
-    }
 
     @SuppressLint("Range")
     fun getMonstruosConCambio(): List<Monstruo> {
@@ -423,6 +523,111 @@ class DatabaseHelper(context: Context):
 
         return spellTraps
     }
+
+    fun getAllMainMonstruos(): List<Monstruo> {
+        val monstruosList = mutableListOf<Monstruo>()
+        val db = readableDatabase
+        val query = "SELECT * FROM $TABLE_MONSTRUOS WHERE $COL_CATEGORIA2 IN ('Normal', 'Efecto', 'Ritual', 'Pendulo')"
+        val cursor = db.rawQuery(query, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val id = cursor.getInt(0)
+                val categoria = cursor.getString(1) ?: "Monstruo"
+                val categoria2 = cursor.getString(2) ?: ""
+                val nombre = cursor.getString(3) ?: ""
+                val atributo = cursor.getString(4)
+                val nivel = cursor.getInt(5)
+                val tipo = cursor.getString(6)
+                val ataque = cursor.getInt(7)
+                val defensa = cursor.getInt(8)
+                val codigo = cursor.getString(9)
+                val escala = cursor.getInt(10)
+                val cantidad = cursor.getInt(11)
+                val imagen = cursor.getString(12)
+                val cambio = cursor.getInt(13) == 1
+
+                val monstruo = Monstruo(id, categoria, categoria2, nombre, atributo, nivel, tipo,
+                    ataque, defensa, codigo, escala, cantidad, imagen, cambio)
+
+                monstruosList.add(monstruo)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+        return monstruosList
+    }
+
+
+    @SuppressLint("Range")
+    fun buscarMonstruosNombre(nombre: String?): List<Monstruo> {
+
+        val db =readableDatabase
+
+        val query = "SELECT * FROM $TABLE_MONSTRUOS " +
+                "WHERE ${if (nombre != "") "nombre LIKE '%$nombre%' AND " else ""}" +
+                "categoria2 IN ('Normal', 'Efecto')"
+
+        val cursor = db.rawQuery(query, null)
+        val monstruos = mutableListOf<Monstruo>()
+        while (cursor.moveToNext()) {
+            val id = cursor.getInt(0)
+            val categoria = cursor.getString(1) ?: "Monstruo"
+            val categoria2 = cursor.getString(2) ?: ""
+            val nombre = cursor.getString(3) ?: ""
+            val atributo = cursor.getString(4)
+            val nivel = cursor.getInt(5)
+            val tipo = cursor.getString(6)
+            val ataque = cursor.getInt(7)
+            val defensa = cursor.getInt(8)
+            val codigo = cursor.getString(9)
+            val escala = cursor.getInt(10)
+            val cantidad = cursor.getInt(11)
+            val imagen = cursor.getString(12)
+            val cambio = cursor.getInt(13) == 1
+
+            val monstruo = Monstruo(id, categoria, categoria2, nombre, atributo, nivel, tipo,
+                ataque, defensa, codigo, escala, cantidad, imagen, cambio)
+            monstruos.add(monstruo)
+        }
+        cursor.close()
+        db.close()
+
+        return monstruos
+    }
+
+    @SuppressLint("Range")
+    fun buscarSpellTrapsNombre(nombre: String?): List<Spells_Traps> {
+
+        val spellTraps = mutableListOf<Spells_Traps>()
+
+        val db = this.readableDatabase
+
+        val selectQuery = "SELECT * FROM $TABLE_SPELL_TRAP " +
+                "WHERE ${if(nombre != "") "nombre LIKE '%$nombre%'" else "1=1"}"
+
+
+        val cursor = db.rawQuery(selectQuery, null)
+
+        while (cursor.moveToNext()) {
+            val id = cursor.getInt(0)
+            val nombre = cursor.getString(1)
+            val categoria = cursor.getString(2)
+            val tipo = cursor.getString(3)
+            val codigo = cursor.getString(4)
+            val cantidad = cursor.getInt(5)
+            val imagen = cursor.getString(6)
+            val cambio = cursor.getInt(7) == 1
+
+            val spellTrap = Spells_Traps(id, nombre, categoria, tipo, codigo, cantidad, imagen, cambio)
+            spellTraps.add(spellTrap)
+        }
+
+        cursor.close()
+        db.close()
+
+        return spellTraps
+    }
+
 
 
 

@@ -13,11 +13,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.gif.GifDrawable
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.mybinder.*
 import com.example.mybinder.Adapters.MonstruoAdapter
 import com.example.mybinder.Adapters.SpellTrapAdapter
@@ -25,8 +31,8 @@ import com.example.mybinder.Funciones.AñadirCarta
 import com.example.mybinder.Funciones.Filtrado_activity
 import com.example.mybinder.controllers.DatabaseHelper
 import com.example.mybinder.controllers.OnItemClickListener
-import com.example.mybinder.detalles.DetallesCartaMon
-import com.example.mybinder.detalles.DetallesCartaST
+import com.example.mybinder.Detalles.DetallesCartaMon
+import com.example.mybinder.Detalles.DetallesCartaST
 import com.google.android.material.navigation.NavigationView
 
 
@@ -38,6 +44,21 @@ class Lista_cambio: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.lista_cambio_layout)
+
+        val imageViewBG = findViewById<ImageView>(R.id.imageViewBG)
+
+        Glide.with(this)
+            .asGif()
+            .load(R.raw.fondo_gif)
+            .into(object : SimpleTarget<GifDrawable>() {
+                override fun onResourceReady(
+                    resource: GifDrawable,
+                    transition: Transition<in GifDrawable>?
+                ) {
+                    imageViewBG.setImageDrawable(resource)
+                    resource.start()
+                }
+            })
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.drawerLayout)
         val navView = findViewById<NavigationView>(R.id.nav_view)
@@ -52,7 +73,6 @@ class Lista_cambio: AppCompatActivity() {
 
         val filtrado_btn = findViewById<ImageButton>(R.id.filtrado_Main)
         val pdf_btn = findViewById<ImageButton>(R.id.pdf_btn)
-
         // Crear un RecyclerView para la lista de monstruos
 
         val monstruosRecyclerView = RecyclerView(this)
@@ -155,9 +175,6 @@ class Lista_cambio: AppCompatActivity() {
                     val intent = Intent(this, Lista_cambio::class.java)
                     startActivity(intent)
                 }
-                R.id.probabilidades -> {
-
-                }
             }
             true
 
@@ -171,6 +188,11 @@ class Lista_cambio: AppCompatActivity() {
         pdf_btn.setOnClickListener{
 
            val listacompleta = mutableListOf<Any>( monstruosList + spellsTrapsList )
+            Toast.makeText(
+                this@Lista_cambio,
+                "PDF creado",
+                Toast.LENGTH_SHORT
+            ).show()
 
             createPdf(listacompleta)
         }

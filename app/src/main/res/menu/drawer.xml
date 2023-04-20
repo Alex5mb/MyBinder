@@ -12,7 +12,4 @@
         <item
             android:id="@+id/cambio"
             android:title="Mi cambio"></item>
-        <item
-            android:id="@+id/probabilidades"
-            android:title="Probabilidades"></item>
 </menu>

@@ -1,53 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerLayout"
-    tools:context=".MainActivity"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:background="@drawable/background">
+    android:layout_height="match_parent"
+    tools:context=".Listas.MainActivity">
+
+    <ImageView
+        android:id="@+id/imageViewBG"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@raw/fondo_gif"
+        android:scaleType="fitXY" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <ScrollView
-        android:layout_width="412dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView2">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+        <ScrollView
+            android:layout_width="412dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:layout_marginBottom="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2">
+            app:layout_constraintTop_toTopOf="@+id/textView2">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/contenedorRecyclerMonster"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginBottom="5dp" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/contenedorRecyclerView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="200dp" />
-        </LinearLayout>
-    </ScrollView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/contenedorRecyclerMonster"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="5dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/contenedorRecyclerView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="200dp" />
+            </LinearLayout>
+        </ScrollView>
 
         <TextView
             android:id="@+id/textView2"
@@ -56,7 +61,7 @@
             android:layout_marginTop="24dp"
             android:text="@string/mis_cartas"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="48sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/filtrado_Main"
@@ -69,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:backgroundTint="#000000"
+            android:backgroundTint="@color/xyz"
             android:contentDescription="TODO"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -83,8 +88,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:menu="@menu/drawer"
         app:headerLayout="@layout/nav_header"
-        />
+        app:menu="@menu/drawer" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

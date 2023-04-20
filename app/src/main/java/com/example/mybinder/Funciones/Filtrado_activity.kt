@@ -5,6 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.gif.GifDrawable
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.mybinder.Listas.Filtrado_list
 import com.example.mybinder.R
 
@@ -28,6 +32,21 @@ class Filtrado_activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.filtrado_activity)
+
+        val imageViewBG = findViewById<ImageView>(R.id.imageViewBG)
+
+        Glide.with(this)
+            .asGif()
+            .load(R.raw.fondo_gif)
+            .into(object : SimpleTarget<GifDrawable>() {
+                override fun onResourceReady(
+                    resource: GifDrawable,
+                    transition: Transition<in GifDrawable>?
+                ) {
+                    imageViewBG.setImageDrawable(resource)
+                    resource.start()
+                }
+            })
 
 
         val filtrado_btn = findViewById<Button>(R.id.filtrado_btn)
@@ -153,6 +172,7 @@ class Filtrado_activity : AppCompatActivity() {
                         escalaText.visibility = View.INVISIBLE
                         atributoText.visibility = View.INVISIBLE
 
+
                     }
                     1 -> {
                         categoria = "Monstruo"
@@ -165,16 +185,19 @@ class Filtrado_activity : AppCompatActivity() {
                         campoAtaque2.visibility = View.VISIBLE
                         campoDefensa.visibility = View.VISIBLE
                         campoDefensa2.visibility = View.VISIBLE
+                        campoEscala.visibility = View.VISIBLE
+                        campoEscala2.visibility = View.VISIBLE
                         categorias2Text.visibility = View.VISIBLE
                         separadorNivel.visibility = View.VISIBLE
                         separadorAtack.visibility = View.VISIBLE
                         separadorDef.visibility = View.VISIBLE
+                        separadorEscala.visibility = View.VISIBLE
                         nivelText.visibility = View.VISIBLE
                         ataqueText.visibility = View.VISIBLE
                         defensaText.visibility = View.VISIBLE
+                        escalaText.visibility = View.VISIBLE
                         atributoText.visibility = View.VISIBLE
-                        escalaText.visibility = View.INVISIBLE
-                        campoEscala2.visibility = View.INVISIBLE
+
 
                         val listaTipo = resources.getStringArray(R.array.tipoM)
                         val tipoAdapter =

@@ -20,6 +20,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.gif.GifDrawable
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.mybinder.Listas.MainActivity
 import com.example.mybinder.Model.Monstruo
 import com.example.mybinder.Model.Spells_Traps
@@ -51,6 +54,21 @@ class EditMonCard: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_mon_card)
+
+        val imageViewBG = findViewById<ImageView>(R.id.imageViewBG)
+
+        Glide.with(this)
+            .asGif()
+            .load(R.raw.fondo_gif)
+            .into(object : SimpleTarget<GifDrawable>() {
+                override fun onResourceReady(
+                    resource: GifDrawable,
+                    transition: Transition<in GifDrawable>?
+                ) {
+                    imageViewBG.setImageDrawable(resource)
+                    resource.start()
+                }
+            })
 
         val idRec = intent.getIntExtra("id", 0)
         val categoriaRec = intent.getStringExtra("categoria") ?: "Monstruo"
@@ -266,16 +284,55 @@ class EditMonCard: AppCompatActivity() {
                     1 -> {
                         categoria = "Monstruo"
 
-                        spinnerCategorias2.visibility = View.VISIBLE
-                        spinnerAtributo.visibility = View.VISIBLE
-                        campoNivel.visibility = View.VISIBLE
-                        campoATK.visibility = View.VISIBLE
-                        campoDEF.visibility = View.VISIBLE
-                        categoria2Txt.visibility = View.VISIBLE
-                        nivelTxt.visibility = View.VISIBLE
-                        ataqueTxt.visibility = View.VISIBLE
-                        defensaTxt.visibility = View.VISIBLE
-                        atributoTxt.visibility = View.VISIBLE
+                        val params = spinnerCategorias2.layoutParams
+                        params.width = LinearLayout.LayoutParams.WRAP_CONTENT
+                        params.height = LinearLayout.LayoutParams.WRAP_CONTENT
+                        spinnerCategorias2.layoutParams = params
+
+                        val params2 = spinnerAtributo.layoutParams
+                        params2.width = LinearLayout.LayoutParams.WRAP_CONTENT
+                        params2.height = LinearLayout.LayoutParams.WRAP_CONTENT
+                        spinnerAtributo.layoutParams = params2
+
+                        val params3 = campoNivel.layoutParams
+                        params3.width = LinearLayout.LayoutParams.WRAP_CONTENT
+                        params3.height = LinearLayout.LayoutParams.WRAP_CONTENT
+                        campoNivel.layoutParams = params3
+
+                        val params4 = campoATK.layoutParams
+                        params4.width = LinearLayout.LayoutParams.WRAP_CONTENT
+                        params4.height = LinearLayout.LayoutParams.WRAP_CONTENT
+                        campoATK.layoutParams = params4
+
+                        val params5 = campoDEF.layoutParams
+                        params5.width = LinearLayout.LayoutParams.WRAP_CONTENT
+                        params5.height = LinearLayout.LayoutParams.WRAP_CONTENT
+                        campoDEF.layoutParams = params5
+
+                        val params6 = categoria2Txt.layoutParams
+                        params6.width = LinearLayout.LayoutParams.WRAP_CONTENT
+                        params6.height = LinearLayout.LayoutParams.WRAP_CONTENT
+                        categoria2Txt.layoutParams = params6
+
+                        val params7 = nivelTxt.layoutParams
+                        params7.width = LinearLayout.LayoutParams.WRAP_CONTENT
+                        params7.height = LinearLayout.LayoutParams.WRAP_CONTENT
+                        nivelTxt.layoutParams = params7
+
+                        val params8 = ataqueTxt.layoutParams
+                        params8.width = 325
+                        params8.height = LinearLayout.LayoutParams.WRAP_CONTENT
+                        ataqueTxt.layoutParams = params8
+
+                        val params9 = defensaTxt.layoutParams
+                        params9.width = 325
+                        params9.height = LinearLayout.LayoutParams.WRAP_CONTENT
+                        defensaTxt.layoutParams = params9
+
+                        val params10 = atributoTxt.layoutParams
+                        params10.width = LinearLayout.LayoutParams.WRAP_CONTENT
+                        params10.height = LinearLayout.LayoutParams.WRAP_CONTENT
+                        atributoTxt.layoutParams = params10
 
                         val listaTipo = resources.getStringArray(R.array.tipoM)
                         val tipoAdapter =
@@ -381,18 +438,41 @@ class EditMonCard: AppCompatActivity() {
                     2 -> {
                         categoria = "Magica"
 
-                        spinnerCategorias2.visibility = View.INVISIBLE
-                        spinnerAtributo.visibility = View.INVISIBLE
-                        campoNivel.visibility = View.INVISIBLE
-                        campoATK.visibility = View.INVISIBLE
-                        campoDEF.visibility = View.INVISIBLE
-                        campoEscala.visibility = View.INVISIBLE
-                        categoria2Txt.visibility = View.INVISIBLE
-                        nivelTxt.visibility = View.INVISIBLE
-                        ataqueTxt.visibility = View.INVISIBLE
-                        defensaTxt.visibility = View.INVISIBLE
-                        escalaTxt.visibility = View.INVISIBLE
-                        atributoTxt.visibility = View.INVISIBLE
+                        spinnerCategorias2.layoutParams.height = 0
+                        spinnerCategorias2.requestLayout()
+
+                        spinnerAtributo.layoutParams.height = 0
+                        spinnerAtributo.requestLayout()
+
+                        campoNivel.layoutParams.height = 0
+                        campoNivel.requestLayout()
+
+                        campoATK.layoutParams.height = 0
+                        campoATK.requestLayout()
+
+                        campoDEF.layoutParams.height = 0
+                        campoDEF.requestLayout()
+
+                        campoEscala.layoutParams.height = 0
+                        campoEscala.requestLayout()
+
+                        categoria2Txt.layoutParams.height = 0
+                        categoria2Txt.requestLayout()
+
+                        nivelTxt.layoutParams.height = 0
+                        nivelTxt.requestLayout()
+
+                        ataqueTxt.layoutParams.height = 0
+                        ataqueTxt.requestLayout()
+
+                        defensaTxt.layoutParams.height = 0
+                        defensaTxt.requestLayout()
+
+                        escalaTxt.layoutParams.height = 0
+                        escalaTxt.requestLayout()
+
+                        atributoTxt.layoutParams.height = 0
+                        atributoTxt.requestLayout()
 
                         val listaTipo = resources.getStringArray(R.array.tipoS)
                         val tipoAdapter =
@@ -442,18 +522,41 @@ class EditMonCard: AppCompatActivity() {
                     3 -> {
                         categoria = "Trampa"
 
-                        spinnerCategorias2.visibility = View.INVISIBLE
-                        spinnerAtributo.visibility = View.INVISIBLE
-                        campoNivel.visibility = View.INVISIBLE
-                        campoATK.visibility = View.INVISIBLE
-                        campoDEF.visibility = View.INVISIBLE
-                        campoEscala.visibility = View.INVISIBLE
-                        categoria2Txt.visibility = View.INVISIBLE
-                        nivelTxt.visibility = View.INVISIBLE
-                        ataqueTxt.visibility = View.INVISIBLE
-                        defensaTxt.visibility = View.INVISIBLE
-                        escalaTxt.visibility = View.INVISIBLE
-                        atributoTxt.visibility = View.INVISIBLE
+                        spinnerCategorias2.layoutParams.height = 0
+                        spinnerCategorias2.requestLayout()
+
+                        spinnerAtributo.layoutParams.height = 0
+                        spinnerAtributo.requestLayout()
+
+                        campoNivel.layoutParams.height = 0
+                        campoNivel.requestLayout()
+
+                        campoATK.layoutParams.height = 0
+                        campoATK.requestLayout()
+
+                        campoDEF.layoutParams.height = 0
+                        campoDEF.requestLayout()
+
+                        campoEscala.layoutParams.height = 0
+                        campoEscala.requestLayout()
+
+                        categoria2Txt.layoutParams.height = 0
+                        categoria2Txt.requestLayout()
+
+                        nivelTxt.layoutParams.height = 0
+                        nivelTxt.requestLayout()
+
+                        ataqueTxt.layoutParams.height = 0
+                        ataqueTxt.requestLayout()
+
+                        defensaTxt.layoutParams.height = 0
+                        defensaTxt.requestLayout()
+
+                        escalaTxt.layoutParams.height = 0
+                        escalaTxt.requestLayout()
+
+                        atributoTxt.layoutParams.height = 0
+                        atributoTxt.requestLayout()
 
                         val listaTipo = resources.getStringArray(R.array.tipoT)
                         val tipoAdapter =

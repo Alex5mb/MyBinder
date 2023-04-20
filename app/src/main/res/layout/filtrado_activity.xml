@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/imageViewBG"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@raw/fondo_gif"
+        android:scaleType="fitXY" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -12,8 +18,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/background">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/options_container"
@@ -33,7 +38,7 @@
                 android:layout_marginBottom="20dp"
                 android:text="Filtrado"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="48sp"
                 android:textStyle="bold" />
 
@@ -50,7 +55,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:text="Nombre:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -61,10 +66,11 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:maxLength="50"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 
@@ -78,9 +84,9 @@
                     android:layout_width="103dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:text="Categoria:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
@@ -90,7 +96,8 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:backgroundTint="#FFFCFC" />
             </LinearLayout>
 
             <LinearLayout
@@ -106,17 +113,18 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:text="Tipo:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <Spinner
                     android:id="@+id/tipoFilCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="411dp"
+                    android:layout_height="58dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFCFC"
                     android:minHeight="48dp" />
             </LinearLayout>
 
@@ -133,7 +141,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:text="Codigo:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
@@ -144,11 +152,12 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="15dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:maxLength="5"
                     android:minHeight="48dp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -164,7 +173,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:text="Categoria 2:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -174,7 +183,8 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:backgroundTint="#FFFCFC" />
             </LinearLayout>
 
             <LinearLayout
@@ -189,7 +199,7 @@
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="20dp"
                     android:text="Nivel:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -200,11 +210,12 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
                     android:inputType="numberSigned"
                     android:maxLength="2"
                     android:minHeight="48dp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/middlelvlFil"
@@ -215,7 +226,7 @@
                     android:layout_weight="1"
                     android:text="≥"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -226,11 +237,12 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="50dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
                     android:inputType="numberSigned"
                     android:maxLength="2"
                     android:minHeight="48dp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 
@@ -247,7 +259,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:text="Ataque:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -258,11 +270,12 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
                     android:inputType="numberSigned"
                     android:maxLength="4"
                     android:minHeight="48dp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/atackFilmiddle"
@@ -273,7 +286,7 @@
                     android:layout_weight="1"
                     android:text="≥"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -284,11 +297,12 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
                     android:inputType="numberSigned"
                     android:maxLength="4"
                     android:minHeight="48dp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -304,7 +318,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:text="Defensa:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -315,11 +329,12 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
                     android:inputType="numberSigned"
                     android:maxLength="4"
                     android:minHeight="48dp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/deffFilmiddle"
@@ -330,7 +345,7 @@
                     android:layout_weight="1"
                     android:text="≥"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -341,11 +356,12 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
                     android:inputType="numberSigned"
                     android:maxLength="4"
                     android:minHeight="48dp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -361,7 +377,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:text="Atributo:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -371,7 +387,8 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:backgroundTint="#FFFCFC" />
             </LinearLayout>
 
             <LinearLayout
@@ -386,7 +403,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="20dp"
                     android:text="Escala Pendulo:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -398,10 +415,11 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
                     android:inputType="numberSigned"
                     android:maxLength="2"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/escalaFilmiddle"
@@ -412,7 +430,7 @@
                     android:layout_weight="1"
                     android:text="≥"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -423,10 +441,11 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="40dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
                     android:inputType="numberSigned"
                     android:maxLength="2"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <Button

@@ -16,6 +16,12 @@ import com.example.mybinder.controllers.OnItemClickListener
 class MonstruoAdapter (private val monstruos: List<Monstruo>,private var listener: OnItemClickListener) :
     RecyclerView.Adapter<MonstruoAdapter.MonstruoViewHolder>() {
 
+    fun updateList(newList: List<Monstruo>) {
+        monstruos.toMutableList().clear()
+        monstruos.toMutableList().addAll(newList)
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonstruoViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.monster_card, parent, false)
         return MonstruoViewHolder(view)

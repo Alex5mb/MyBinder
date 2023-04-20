@@ -1,4 +1,4 @@
-package com.example.mybinder.detalles
+package com.example.mybinder.Detalles
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -8,8 +8,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.gif.GifDrawable
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.mybinder.Funciones.EditSTCard
 import com.example.mybinder.Listas.Filtrado_list
+import com.example.mybinder.Listas.Lista_cambio
 import com.example.mybinder.Listas.MainActivity
 import com.example.mybinder.Model.Spells_Traps
 import com.example.mybinder.R
@@ -20,6 +24,21 @@ class DetallesCartaST: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detalles_st_layout)
+
+        val imageViewBG = findViewById<ImageView>(R.id.imageViewBG)
+
+        Glide.with(this)
+            .asGif()
+            .load(R.raw.fondo_gif)
+            .into(object : SimpleTarget<GifDrawable>() {
+                override fun onResourceReady(
+                    resource: GifDrawable,
+                    transition: Transition<in GifDrawable>?
+                ) {
+                    imageViewBG.setImageDrawable(resource)
+                    resource.start()
+                }
+            })
 
         val idRecibido = intent.getIntExtra("id",0)
         val tipoRecibido = intent.getStringExtra("tipo")
@@ -208,7 +227,8 @@ class DetallesCartaST: AppCompatActivity() {
             val spell_trap = Spells_Traps(idRecibido,nombreRecibido ,categoriaRecibido,tipoRecibido,codigoRecibido,cantidadRecibido,imagenRecibido, cambio)
 
             databaseHelper.updateSpellTrap(spell_trap)
-
+            val intent = Intent(this, Lista_cambio::class.java)
+            startActivity(intent)
         }
     }
 }
