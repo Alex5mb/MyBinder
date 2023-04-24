@@ -180,6 +180,42 @@ class AñadirCarta : AppCompatActivity() {
                 when (position) {
                     0 ->{
                         categoria ="Monstruo"
+
+                        spinnerCategorias2.layoutParams.height = 0
+                        spinnerCategorias2.requestLayout()
+
+                        spinnerAtributo.layoutParams.height = 0
+                        spinnerAtributo.requestLayout()
+
+                        campoNivel.layoutParams.height = 0
+                        campoNivel.requestLayout()
+
+                        campoATK.layoutParams.height = 0
+                        campoATK.requestLayout()
+
+                        campoDEF.layoutParams.height = 0
+                        campoDEF.requestLayout()
+
+                        campoEscala.layoutParams.height = 0
+                        campoEscala.requestLayout()
+
+                        categoria2Txt.layoutParams.height = 0
+                        categoria2Txt.requestLayout()
+
+                        nivelTxt.layoutParams.height = 0
+                        nivelTxt.requestLayout()
+
+                        ataqueTxt.layoutParams.height = 0
+                        ataqueTxt.requestLayout()
+
+                        defensaTxt.layoutParams.height = 0
+                        defensaTxt.requestLayout()
+
+                        escalaTxt.layoutParams.height = 0
+                        escalaTxt.requestLayout()
+
+                        atributoTxt.layoutParams.height = 0
+                        atributoTxt.requestLayout()
                     }
                     1 -> {
                         categoria = "Monstruo"

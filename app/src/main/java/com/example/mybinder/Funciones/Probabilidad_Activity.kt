@@ -77,6 +77,8 @@ class Probabilidad_Activity : AppCompatActivity() {
 
         val databaseHelper = DatabaseHelper(this)
 
+        val mazoFull = databaseHelper.obtenerImagenesIntermedia(databaseHelper.readableDatabase, idRec)
+
         mainDeck = databaseHelper.obtenerImagenesIntermedia(databaseHelper.readableDatabase, idRec)
         numeroDeck.text = mainDeck.size.toString()
 
@@ -97,7 +99,7 @@ class Probabilidad_Activity : AppCompatActivity() {
                         enMano++
                 }
 
-                if(mano.size  < cantidad.toInt() && enMano < numCop){
+                if(mano.size  < cantidad.toInt()){
 
                     val carta = mainDeck[position]
                     mano.add(carta)
@@ -196,12 +198,6 @@ class Probabilidad_Activity : AppCompatActivity() {
         }
         clean_btn.setOnClickListener{
 
-            mano.clear()
-            manoAdapter.notifyDataSetChanged()
-
-            mainDeck = databaseHelper.obtenerImagenesIntermedia(databaseHelper.readableDatabase, idRec)
-            mazoAdapter.notifyDataSetChanged()
-
             if(cantidad == "5"){
                 manoCantidad = 5
                 pro6.text = ""
@@ -210,7 +206,6 @@ class Probabilidad_Activity : AppCompatActivity() {
             else{
                 manoCantidad = 6
                 pro6.text = "0%"
-
             }
 
             mazoCantidad =  mainDeck.size
@@ -219,6 +214,14 @@ class Probabilidad_Activity : AppCompatActivity() {
             pro3.text = "0%"
             pro4.text = "0%"
             pro5.text = "0%"
+
+            mainDeck.clear()
+            mainDeck.addAll(mazoFull)
+            mazoAdapter.notifyDataSetChanged()
+
+            mano.clear()
+            manoAdapter.notifyDataSetChanged()
+
 
         }
 
