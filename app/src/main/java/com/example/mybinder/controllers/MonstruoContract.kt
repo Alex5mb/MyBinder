@@ -10,6 +10,8 @@ class MonstruoContract {
                 const val DATABASE_NAME = "Monstruos.db"
                 const val TABLE_MONSTRUOS = "monstruos"
                 const val TABLE_SPELL_TRAP = "spell_trap"
+                const val TABLE_MAZO = "mazo"
+                const val TABLE_INTERMEDIA  ="intermedia"
                 const val COL_ID = "id"
                 const val COL_CATEGORIA = "categoria"
                 const val COL_CATEGORIA2 = "categoria2"
@@ -24,6 +26,7 @@ class MonstruoContract {
                 const val COL_CANTIDAD = "cantidad"
                 const val COL_IMAGEN = "imagen"
                 const val COL_CAMBIO = "cambio"
+                const val COL_IDMAZO = "idmazo"
             }
         }
     }

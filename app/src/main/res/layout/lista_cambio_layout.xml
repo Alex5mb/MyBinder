@@ -3,11 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerLayout"
-    tools:context=".MainActivity"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:background="@drawable/background">
+    android:layout_width="match_parent">
+
+    <ImageView
+        android:id="@+id/imageViewBG"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@raw/fondo_gif"
+        android:scaleType="fitXY" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -56,7 +61,7 @@
             android:layout_marginTop="40dp"
             android:text="Cambio"
             android:textAlignment="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="48sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/filtrado_Main"
@@ -69,7 +74,7 @@
             android:layout_height="52dp"
             android:layout_marginTop="44dp"
             android:layout_marginEnd="4dp"
-            android:backgroundTint="#000000"
+            android:backgroundTint="@color/xyz"
             android:contentDescription="TODO"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -82,7 +87,7 @@
             android:layout_height="52dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="44dp"
-            android:backgroundTint="#000000"
+            android:backgroundTint="@color/xyz"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="?attr/actionModeCopyDrawable" />

@@ -5,6 +5,11 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
 
+    <string-array name="cantidad">
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
 
     <string-array name="categorias">
         <item></item>

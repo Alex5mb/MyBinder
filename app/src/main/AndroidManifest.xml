@@ -6,6 +6,7 @@
         android:name="android.hardware.camera2"
         android:required="true" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:name="com.example.mybinder.controllers.MyApplication"
         android:allowBackup="true"
@@ -29,7 +30,7 @@
         </provider>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".Listas.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -43,30 +44,66 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".AñadirCarta"
+            android:name=".Funciones.AñadirCarta"
             android:exported="true"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".EditSTCard"
+            android:name=".Funciones.EditSTCard"
             android:exported="true"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".DetallesCartaST"
+            android:name=".Detalles.DetallesCartaST"
             android:exported="true"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".DetallesCartaMon"
+            android:name=".Detalles.DetallesCartaMon"
             android:exported="true"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".EditMonCard"
+            android:name=".Funciones.EditMonCard"
             android:exported="true"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".Funciones.Filtrado_activity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Listas.Filtrado_list"
+            android:exported="true"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Listas.Lista_cambio"
+            android:exported="true"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Listas.Mazos_Activity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Funciones.Crear_Mazo_Activity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Funciones.Editar_Mazo_Activity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".Funciones.Probabilidad_Activity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>

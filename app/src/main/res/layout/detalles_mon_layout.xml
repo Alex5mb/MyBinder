@@ -3,9 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/imageViewBG"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@raw/fondo_gif"
+        android:scaleType="fitXY" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -29,7 +34,7 @@
                 android:layout_marginTop="30dp"
                 android:text="Nombre de prueba"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="34sp" />
 
             <ImageView
@@ -54,7 +59,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:text="Categoria:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
 
                 <TextView
@@ -67,7 +72,7 @@
                     android:layout_weight="1"
                     android:text="Categoria Prueba"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
             </LinearLayout>
 
@@ -84,7 +89,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:text="2ª Categoria:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
 
                 <TextView
@@ -97,7 +102,7 @@
                     android:layout_weight="1"
                     android:text="TextView"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
             </LinearLayout>
 
@@ -115,7 +120,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:text="Atributo:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
 
                 <TextView
@@ -128,7 +133,7 @@
                     android:layout_weight="1"
                     android:text="TextView"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
             </LinearLayout>
 
@@ -146,7 +151,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:text="Nivel:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
 
                 <TextView
@@ -159,7 +164,7 @@
                     android:layout_weight="1"
                     android:text="TextView"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
             </LinearLayout>
 
@@ -177,7 +182,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:text="Ataque:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
 
                 <TextView
@@ -190,7 +195,7 @@
                     android:layout_weight="1"
                     android:text="TextView"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
             </LinearLayout>
 
@@ -208,7 +213,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:text="Defensa:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
 
                 <TextView
@@ -221,7 +226,7 @@
                     android:layout_weight="1"
                     android:text="TextView"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
             </LinearLayout>
 
@@ -239,7 +244,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:text="Tipo:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
 
                 <TextView
@@ -252,7 +257,7 @@
                     android:layout_weight="1"
                     android:text="Tipo Prueba"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
             </LinearLayout>
 
@@ -270,8 +275,8 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:text="Cantidad:"
-                    android:textSize="24sp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/cantidadDMon"
@@ -283,7 +288,7 @@
                     android:layout_weight="1"
                     android:text="Cantidad Prueba"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
             </LinearLayout>
 
@@ -301,7 +306,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:text="Codigo:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
 
                 <TextView
@@ -314,7 +319,7 @@
                     android:layout_weight="1"
                     android:text="Codigo Prueba"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
             </LinearLayout>
 
@@ -332,7 +337,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:text="Escala:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
 
                 <TextView
@@ -345,7 +350,7 @@
                     android:layout_weight="1"
                     android:text="TextView"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="24sp" />
             </LinearLayout>
 

@@ -5,14 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/imageViewBG"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@raw/fondo_gif"
+        android:scaleType="fitXY" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/background">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:id="@+id/options_container"
@@ -33,7 +39,7 @@
                 android:layout_marginBottom="20dp"
                 android:text="Editar Carta"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="48sp"
                 android:textStyle="bold" />
 
@@ -60,10 +66,10 @@
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="12dp"
                     android:layout_weight="1"
                     android:text="Nombre:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -74,9 +80,11 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:maxLength="50"/>
+                    android:maxLength="50"
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 
@@ -92,17 +100,18 @@
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="10dp"
                     android:text="Categoria:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <Spinner
                     android:id="@+id/categoriaEditMonCard"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="66dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF" />
             </LinearLayout>
 
             <LinearLayout
@@ -113,22 +122,23 @@
                 <TextView
                     android:id="@+id/textView9"
                     android:layout_width="245dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="58dp"
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:text="Tipo:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <Spinner
                     android:id="@+id/tipoEditMonCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="270dp"
+                    android:layout_height="70dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:minHeight="60dp" />
             </LinearLayout>
 
@@ -145,7 +155,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:text="Cantidad:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
@@ -156,11 +166,12 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="50dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
                     android:inputType="numberSigned"
                     android:maxLength="2"
                     android:minHeight="48dp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -176,7 +187,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:text="Codigo:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
@@ -187,11 +198,12 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="50dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
                     android:inputType="textPersonName"
                     android:maxLength="5"
                     android:minHeight="48dp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -207,7 +219,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:text="Categoria 2:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -217,7 +229,8 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF" />
             </LinearLayout>
 
             <LinearLayout
@@ -232,7 +245,7 @@
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="20dp"
                     android:text="Nivel:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -243,11 +256,12 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="100dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
                     android:inputType="numberSigned"
                     android:maxLength="2"
                     android:minHeight="48dp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 
@@ -264,7 +278,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:text="Ataque:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -275,11 +289,12 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="100dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
                     android:inputType="numberSigned"
                     android:maxLength="4"
                     android:minHeight="48dp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
 
             </LinearLayout>
 
@@ -296,7 +311,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:text="Defensa:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -307,11 +322,12 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="100dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
                     android:inputType="numberSigned"
                     android:maxLength="4"
                     android:minHeight="48dp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -327,7 +343,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:text="Atributo:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -337,7 +353,8 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF" />
             </LinearLayout>
 
             <LinearLayout
@@ -352,7 +369,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="20dp"
                     android:text="Escala Pendulo:"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -363,10 +380,11 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="50dp"
                     android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
                     android:ems="10"
                     android:inputType="numberSigned"
                     android:maxLength="2"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <Button

@@ -9,6 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.mybinder.Model.Monstruo
 import com.example.mybinder.Model.Spells_Traps
 import com.example.mybinder.R
 import com.example.mybinder.controllers.OnItemClickListener
@@ -16,6 +17,12 @@ import com.example.mybinder.controllers.OnItemClickListener
 
 class SpellTrapAdapter(private val spellTraps: List<Spells_Traps>, private var listener: OnItemClickListener) :
     RecyclerView.Adapter<SpellTrapAdapter.SpellTrapViewHolder>() {
+
+    fun updateList(newList: List<Spells_Traps>) {
+        spellTraps.toMutableList().clear()
+        spellTraps.toMutableList().addAll(newList)
+        notifyDataSetChanged()
+    }
 
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -55,11 +62,6 @@ class SpellTrapAdapter(private val spellTraps: List<Spells_Traps>, private var l
 
         if(spellTrap.categoria == "Trampa") {
             spellCardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.trampas))
-            nombre.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
-            tipo.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
-            cantidad.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
-            codigo.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
-            categoria.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
         } else {
             spellCardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.magicas))
         }

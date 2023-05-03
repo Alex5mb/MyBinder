@@ -9,11 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="magicas">#D3A6D86C</color>
     <color name="trampas">#D370009F</color>
-    <color name="normal">#FFF3E572</color>
+    <color name="normal">#CEF3E572</color>
     <color name="efecto">#B5DD8503</color>
-    <color name="fusion">#FFC620E3</color>
-    <color name="ritual">#FF2196F3</color>
-    <color name="sincronia">#86AFB8B7</color>
-    <color name="xyz">#535252</color>
-    <color name="links">#FF2F77B1</color>
+    <color name="fusion">#BAC620E3</color>
+    <color name="ritual">#A42196F3</color>
+    <color name="sincronia">#4BAFB8B7</color>
+    <color name="xyz">#B7535252</color>
+    <color name="links">#B72F77B1</color>
 </resources>

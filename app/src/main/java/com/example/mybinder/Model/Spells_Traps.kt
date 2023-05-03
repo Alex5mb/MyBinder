@@ -13,6 +13,6 @@ class Spells_Traps(
     val cambio: Boolean
 ) {
     override fun toString(): String {
-        return "Cantidad: $cantidad" + " -- " + "Nombre: $nombre" + " -- "+ "Codigo: $codigo\n"
+        return "Cantidad: $cantidad" + ", " + "Nombre: $nombre" + ", "+ "Codigo: $codigo\n"
     }
 }
