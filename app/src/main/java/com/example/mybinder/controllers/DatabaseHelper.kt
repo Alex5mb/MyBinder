@@ -394,7 +394,7 @@ class DatabaseHelper(context: Context):
                 "WHERE ${if(nombre != "" ) "nombre LIKE '%$nombre%' AND " else ""}" +
                 "${if(categoria !="") "categoria LIKE '%$categoria%' AND " else ""}" +
                 "${if(tipo !="") "tipo LIKE '%$tipo%'AND " else ""}"+
-                "${if(codigo != "") "codigo LIKE '%$codigo%' AND " else ""}"+
+                "${if(codigo != "") "codigo = '$codigo' AND " else ""}"+
                 "${if(categoria2 != "") "categoria2  LIKE '%$categoria2%' AND " else ""}"+
                 "nivel BETWEEN ${minNivel ?: 0} AND ${maxNivel ?: 12} " +
                 "AND ${if(atributo != "") "atributo LIKE '$atributo' AND " else ""}"+
@@ -406,7 +406,7 @@ class DatabaseHelper(context: Context):
         val monstruos = mutableListOf<Monstruo>()
         while (cursor.moveToNext()) {
             val id = cursor.getInt(0)
-            val categoria = cursor.getString(1) ?: "Monstruo"
+            val categoria = cursor.getString(1) ?: ""
             val categoria2 = cursor.getString(2) ?: ""
             val nombre = cursor.getString(3) ?: ""
             val atributo = cursor.getString(4)
@@ -441,7 +441,7 @@ class DatabaseHelper(context: Context):
                 "WHERE ${if(nombre != "" ) "nombre LIKE '%$nombre%' AND " else ""}" +
                 "categoria LIKE '%$categoria%'" +
                 "AND tipo LIKE '%$tipo%'"+
-                "${if(codigo != "") " AND codigo LIKE '%$codigo%'" else ""}"
+                "${if(codigo != "") " AND codigo = '$codigo'" else ""}"
 
         val cursor = db.rawQuery(selectQuery, null)
 

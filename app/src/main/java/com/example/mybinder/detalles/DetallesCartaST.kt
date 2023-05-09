@@ -166,7 +166,7 @@ class DetallesCartaST: AppCompatActivity() {
             val intent = Intent(applicationContext, Filtrado_list::class.java)
 
             intent.putExtra("nombre","")
-            intent.putExtra("categoria", categoriaRecibido)
+            intent.putExtra("categoria", "")
             intent.putExtra("tipo", "")
             intent.putExtra("codigo", codigoRecibido)
             intent.putExtra("categoria2", "")

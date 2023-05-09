@@ -145,7 +145,7 @@ class Lista_cambio: AppCompatActivity() {
         layout2.layoutManager = layoutManager2
         layout2.adapter = monstruosAdapter
 
-        val layout = findViewById<RecyclerView>(R.id.contenedorRecyclerView)
+        val layout = findViewById<RecyclerView>(R.id.contenedorRecyclerViewST)
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         layout.layoutManager = layoutManager
         layout.adapter = spellsTrapsAdapter

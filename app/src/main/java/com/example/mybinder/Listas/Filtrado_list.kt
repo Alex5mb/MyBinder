@@ -127,7 +127,7 @@ class Filtrado_list : AppCompatActivity(){
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         spellsTrapsRecyclerView.layoutManager = spellsTrapsLayoutManager
 
-        if(categoria =="" || categoria =="Magica" || categoria =="Trampa") {
+        if(categoria == "" || categoria =="Magica" || categoria =="Trampa") {
            spellsTrapsList = databaseHelper.buscarSpellTraps(nombre, categoria, tipo, codigo)
         }
         else{
@@ -158,7 +158,7 @@ class Filtrado_list : AppCompatActivity(){
         layout2.layoutManager = layoutManager2
         layout2.adapter = monstruosAdapter
 
-        val layout = findViewById<RecyclerView>(R.id.contenedorRecyclerView)
+        val layout = findViewById<RecyclerView>(R.id.contenedorRecyclerViewST)
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         layout.layoutManager = layoutManager
         layout.adapter = spellsTrapsAdapter

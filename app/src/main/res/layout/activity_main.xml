@@ -45,7 +45,7 @@
                     android:layout_marginBottom="5dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/contenedorRecyclerView"
+                    android:id="@+id/contenedorRecyclerViewST"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
