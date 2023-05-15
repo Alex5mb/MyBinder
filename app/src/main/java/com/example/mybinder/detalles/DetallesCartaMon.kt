@@ -42,7 +42,7 @@ class DetallesCartaMon: AppCompatActivity() {
             })
 
         val idRec = intent.getIntExtra("id", 0)
-        val categoriaRec = intent.getStringExtra("categoria") ?: "Monstruo"
+        val categoriaRec = intent.getStringExtra("categoria") ?: ""
         val categoria2Rec = intent.getStringExtra("categoria2") ?: ""
         val nombreRec = intent.getStringExtra("nombre") ?: ""
         val atributoRec = intent.getStringExtra("atributo") ?: ""
@@ -231,7 +231,7 @@ class DetallesCartaMon: AppCompatActivity() {
             val intent = Intent(applicationContext, Filtrado_list::class.java)
 
             intent.putExtra("nombre", "")
-            intent.putExtra("categoria", categoriaRec)
+            intent.putExtra("categoria", "")
             intent.putExtra("tipo", "")
             intent.putExtra("codigo", codigoRec)
             intent.putExtra("categoria2", "")

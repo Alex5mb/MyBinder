@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerLayout"
-    tools:context=".MainActivity"
+    tools:context=".Listas.Filtrado_list"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
@@ -46,7 +46,7 @@
                     android:layout_marginBottom="5dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/contenedorRecyclerView"
+                    android:id="@+id/contenedorRecyclerViewST"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
