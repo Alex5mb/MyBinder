@@ -270,6 +270,16 @@ class AñadirCarta : AppCompatActivity() {
                         params10.height = LinearLayout.LayoutParams.WRAP_CONTENT
                         atributoTxt.layoutParams = params10
 
+                        val params11 = campoEscala.layoutParams
+                        params11.width = LinearLayout.LayoutParams.WRAP_CONTENT
+                        params11.height = LinearLayout.LayoutParams.WRAP_CONTENT
+                        campoEscala.layoutParams = params11
+
+                        val params12 = escalaTxt.layoutParams
+                        params12.width = LinearLayout.LayoutParams.WRAP_CONTENT
+                        params12.height = LinearLayout.LayoutParams.WRAP_CONTENT
+                        escalaTxt.layoutParams = params12
+
 
                         val listaTipo = resources.getStringArray(R.array.tipoM)
                         val tipoAdapter =
@@ -427,25 +437,25 @@ class AñadirCarta : AppCompatActivity() {
         crear_btn.setOnClickListener {
 
             if(campoNivel.text.toString().isEmpty()){
-                nivel = null
+                nivel = 0
             }
             else{
                 nivel = campoNivel.text.toString().toInt()
             }
             if(campoATK.text.toString() == ""){
-                ataque = null
+                ataque = 0
             }
             else{
                 ataque = campoATK.text.toString().toInt()
             }
             if(campoDEF.text.toString() == ""){
-                defensa = null
+                defensa = 0
             }
             else{
                 defensa = campoDEF.text.toString().toInt()
             }
             if(campoEscala.text.toString() == ""){
-                escala = null
+                escala = 0
             }
             else{
                 escala = campoEscala.text.toString().toInt()
@@ -471,16 +481,6 @@ class AñadirCarta : AppCompatActivity() {
                 val databaseHelper = DatabaseHelper(this@AñadirCarta)
 
                 databaseHelper.insertMonstruo(monstruo)
-                val tamaño = databaseHelper.getAllMonstruos().size - 1
-
-                val id = databaseHelper.getAllMonstruos()[tamaño].id
-                println(id)
-                println(databaseHelper.getAllMonstruos())
-                databaseHelper.updateMonstruo(
-                    Monstruo(id, categoriaNonNull, categoria2, nombre, atributo, nivel, tipo,
-                        ataque, defensa, codigo, escala, cantidad, currentPhotoPath, false)
-                )
-
             }
             else{
                 val spell_trap = Spells_Traps(0, nombre,categoria,tipo,codigo,cantidad,currentPhotoPath, false)

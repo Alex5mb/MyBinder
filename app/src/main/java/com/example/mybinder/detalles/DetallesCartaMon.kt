@@ -349,7 +349,7 @@ class DetallesCartaMon: AppCompatActivity() {
             intent.putExtra("categoria", categoriaRec)
             intent.putExtra("tipo", "")
             intent.putExtra("codigo", "")
-            intent.putExtra("categoria2", "")
+            intent.putExtra("categoria2", "Pendulo")
             intent.putExtra("nivel", 0)
             intent.putExtra("nivel2", 12)
             intent.putExtra("ataque", 0)

@@ -391,13 +391,13 @@ class DatabaseHelper(context: Context):
         val db =readableDatabase
 
         val query = "SELECT * FROM $TABLE_MONSTRUOS " +
-                "WHERE ${if(nombre != "" ) "nombre LIKE '%$nombre%' AND " else ""}" +
-                "${if(categoria !="") "categoria LIKE '%$categoria%' AND " else ""}" +
-                "${if(tipo !="") "tipo LIKE '%$tipo%'AND " else ""}"+
-                "${if(codigo != "") "codigo = '$codigo' AND " else ""}"+
-                "${if(categoria2 != "") "categoria2  LIKE '%$categoria2%' AND " else ""}"+
+                "WHERE ${if (nombre!!.isNotBlank()) "nombre LIKE '%$nombre%' AND " else ""}" +
+                "${if (categoria!!.isNotBlank()) "categoria LIKE '%$categoria%' AND " else ""}" +
+                "${if (tipo!!.isNotBlank()) "tipo LIKE '%$tipo%' AND " else ""}" +
+                "${if(codigo != "") "codigo LIKE '%$codigo%' AND " else ""}" +
+                "${if(categoria2 != "") "categoria2  LIKE '%$categoria2%' AND " else ""}" +
                 "nivel BETWEEN ${minNivel ?: 0} AND ${maxNivel ?: 12} " +
-                "AND ${if(atributo != "") "atributo LIKE '$atributo' AND " else ""}"+
+                "AND ${if(atributo != "") "atributo LIKE '$atributo' AND " else ""}" +
                 "escala BETWEEN ${minEscala ?: 0} AND ${maxEscala ?: 13} " +
                 "AND ataque BETWEEN ${minAtaque ?: 0} AND ${maxAtaque ?: 9999} " +
                 "AND defensa BETWEEN ${minDefensa ?: 0} AND ${maxDefensa ?: 9999}"
@@ -441,7 +441,7 @@ class DatabaseHelper(context: Context):
                 "WHERE ${if(nombre != "" ) "nombre LIKE '%$nombre%' AND " else ""}" +
                 "categoria LIKE '%$categoria%'" +
                 "AND tipo LIKE '%$tipo%'"+
-                "${if(codigo != "") " AND codigo = '$codigo'" else ""}"
+                "${if(codigo != "") " AND codigo LIKE '%$codigo%'" else ""}"
 
         val cursor = db.rawQuery(selectQuery, null)
 
